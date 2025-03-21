@@ -1,49 +1,73 @@
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(50deg, #0080FF, #00FFFF);
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-}
-.login-container {
-    background-color: rgb(255, 255, 255);
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-}
-.login-container h2 {
-    margin-bottom: 20px;
-}
-.login-container input[type="text"],
-.login-container input[type="password"],
-.login-container button {
-    width: calc(100% - 20px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-.login-container button {
-    background-color: #0080FF;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-.login-container button:hover {
-    background-color: #2C7865;
+    min-height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(to right, #0762d8 , #2de5e0);
+    font-family: 'Incosolate', monospace;
 }
 
-header {
-    background-color: #f0f0f0;
-    padding: 3px;
-    position:fixed; 
-    top: 0; 
-    width:100%; 
+h1{
+    font-size: 40px;
+    margin-bottom:0px;
+}
+
+h2{
+    font-size: 30px;
+    margin-top:0px;
+    margin-bottom:10px;
+}
+
+button {
+    display:block;
+    margin: 60px auto; /* 20px top margin; auto left/right centers it; adjust bottom margin as needed */
+    font-size: 18px;  /* Makes text larger */
+    padding: 14px 28px;  /* Increases button size */
+    background: linear-gradient(to right, #0762d8, #2de5e0); /* Gradient */
+    color: white;  /* White text */
+    border: none;  /* Removes default border */
+    border-radius: 8px;  /* Rounded corners */
+    cursor: pointer;  /* Changes cursor to pointer */
+    transition: 0.3s ease; /* Smooth hover effect */
+    font-weight:bold;
+}
+
+button:hover {
+    opacity: 0.8; /* Slight transparency on hover */
+}
+
+img.top-left {
+    position: absolute;
+    top: 20px;   /* Adjust as needed */
+    left: 20px;  /* Adjust as needed */
+}
+
+.subtitle{
+    font-size: 14px;
+    margin-top:0px;
+    margin-bottom:20px;
+    color:grey;
+}
+
+.field{
+    margin-bottom:20px;
+    padding-top:20px;
+    padding-right:180px;
+    border:2px solid black;
+}
+
+
+.box {
+    box-sizing:border-box; /*makes padding part of the box's dimensions*/
+    flex-direction: column;
+    display: flex;
+    width: 500px;
+    height: 525px;
+    align-items: top;
+    border: 2px solid black;
+    padding-top:20px;
+    padding-left:80px;
+    padding-right:80px;
+    background:white;
 }
