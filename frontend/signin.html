@@ -14,11 +14,14 @@
             <p class="subtitle">Please enter your details below.</p>
             
             <form action="/login" method="POST">
+                <h2>Name</h2>
+                <input class="field" type="name" name="name" placeholder="" required>
                 <h2>Email Address</h2>
                 <input class="field" type="email" name="email" placeholder="" required>
                 <h2>Password</h2>
                 <input class="field" type="password" name="password" placeholder="" required>
-                <p class="subtitle">Don't have an account? <a href="signup.html" class="signup-link">Sign Up</a></p>
+                <h2>Confirm Password</h2>
+                <input class="field" type="password" name="password" placeholder="" required>
                 <button type="submit">Login</button>
             </form>
         </div>
