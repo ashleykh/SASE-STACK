@@ -52,7 +52,8 @@ img.top-left {
 
 .field{
     margin-bottom:20px;
-    padding-top:20px;
+    padding-top:10px;
+    padding-bottom:10px;
     padding-right:180px;
     border:2px solid black;
 }
@@ -63,7 +64,7 @@ img.top-left {
     flex-direction: column;
     display: flex;
     width: 500px;
-    height: 525px;
+    height: 670px;
     align-items: top;
     border: 2px solid black;
     padding-top:20px;
