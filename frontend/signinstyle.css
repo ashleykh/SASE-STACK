@@ -6,7 +6,7 @@ body {
     margin: 0;
     background-image: linear-gradient(to right, #0762d8 , #2de5e0);
     font-family: 'Incosolate', monospace;
-    margin-left: -16px;
+    padding-right: 16px;
 }
 
 h1{
