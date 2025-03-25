@@ -2,11 +2,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 98vh;
     margin: 0;
     background-image: linear-gradient(to right, #0762d8 , #2de5e0);
     font-family: 'Incosolate', monospace;
-    padding-right: 16px;
 }
 
 h1{
@@ -32,7 +31,7 @@ button {
     cursor: pointer;  /* Changes cursor to pointer */
     transition: 0.3s ease; /* Smooth hover effect */
     font-weight:bold;
-    margin-top: 23px;
+    margin-top: 10px;
 }
 
 button:hover {
