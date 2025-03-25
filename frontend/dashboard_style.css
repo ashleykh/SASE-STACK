@@ -35,7 +35,7 @@ button:hover {
 .navbtn-dash{ 
     position: absolute;
     top: -23px;
-    left: 400px;
+    left: 400px; /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -44,7 +44,7 @@ button:hover {
 .navbtn-list{ 
     position: absolute;
     top: -23px;
-    left: 1000px;
+    left: 1000px;  /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -53,7 +53,7 @@ button:hover {
 .navbtn-log-out{ 
     position: absolute;
     top: -23px;
-    left: 1600px;
+    left: 1600px;  /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -62,7 +62,7 @@ button:hover {
 .menu-icon {
     position: absolute;
     top: 20px;
-    left: 30px;
+    left: 30px;  /* Adjust if needed */
     font-size: 70px;
     color: white;
     margin-right: 10px;
@@ -72,5 +72,5 @@ button:hover {
 img.top-left-logo { 
     position: absolute;
     top: 40px;
-    left: 120px;
+    left: 120px;  /* Adjust if needed */
 }
