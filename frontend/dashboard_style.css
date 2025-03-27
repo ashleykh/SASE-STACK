@@ -120,3 +120,43 @@ img.top-left-logo {
     height: 35px;
     width: 300px;
 }
+
+
+/* Added Styles for Sort By */
+.sort-container {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f0f0f0; /* Light grey background */
+    padding: 10px 15px;
+    border-radius: 20px; /* Rounded corners */
+    font-family: sans-serif;
+    font-size: 16px;
+    margin-left: 10px; /* Add some space between Search and Sort */
+    margin-top: -5.5%; /* Align with search input */
+    margin-left: 75%; /* Position next to search input */
+}
+
+.sort-container .sort-by {
+    margin-right: 10px;
+    text-decoration: underline;
+    color: #007bff; /* Blue color for "Sort by" */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.sort-container input[list="sort-options"] {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc; /* Add a border for input */
+    background-color: #e0e0e0; /* Slightly darker grey for the input */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.sort-container datalist {
+    background-color: #f0f0f0; /* Light grey for the datalist */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.sort-container datalist option {
+    padding: 5px 10px;
+}

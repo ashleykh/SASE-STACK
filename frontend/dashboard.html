@@ -16,9 +16,19 @@
             <button onclick="location.href='index.html'" type="button" class="navbtn-log-out">Logout</button>
         </div>
 
-        <div class ="box-list">
+
+        <div class="box-list">
             <button class="catagory-btn">+ Entry</button>
-            <input class ="catagory-search" type="text" placeholder="Search..">
+            <input class="catagory-search" type="text" placeholder="Search..">
+            <div class="sort-container">
+                <span class="sort-by">Sort by</span>
+                <input list="sort-options" name="sort">
+                <datalist id="sort-options">
+                    <option value="Rating">
+                    <option value="Date">
+                    <option value="Name">
+                </datalist>
+            </div>
         </div>
 
         <div class ="box-catagory">
