@@ -124,10 +124,12 @@ img.top-left-logo {
 
 /* Added Styles for Sort By */
 .sort-container {
+    position: absolute;
+    bottom: 90%;
     display: inline-flex;
     align-items: center;
-    background-color: #f0f0f0; /* Light grey background */
-    padding: 10px 15px;
+    background-color: white; /* Light grey background */
+    padding:  10px 70px;
     border-radius: 20px; /* Rounded corners */
     font-family: sans-serif;
     font-size: 16px;
