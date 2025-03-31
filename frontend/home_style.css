@@ -1,11 +1,24 @@
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background-image: linear-gradient(to right, #0762d8 , #2de5e0);
+  font-family: 'Incosolate', monospace;
+  margin: 0; /* removes scrolling feature going along x and y for now */
+  padding: 0;
+  overflow-x: hidden;
+}
+
 /* Split the screen in half */
 .split {
     height: 100%;
     width: 50%;
     position: fixed;
     z-index: 1;
-    top: 0;
+    top: 120px;
     overflow-x: hidden;
     padding-top: 20px;
   }
@@ -46,4 +59,73 @@ h2:after
 .content-wrapper {
     direction: ltr; /* Keep the text flowing from left to right */
     padding-right: 10px; /* This compensates for the scrollbar */
+}
+
+/* implemented from Alvins provided design */ 
+button {
+  display:block;
+  margin: 60px auto; /* 20px top margin; auto left/right centers it; adjust bottom margin as needed */
+  font-size: 18px;  /* Makes text larger */
+  padding: 14px 28px;  /* Increases button size */
+  background: transparent; /* Gradient */
+  color: white;  /* White text */
+  border: none;  /* Removes default border */
+  border-radius: 8px;  /* Rounded corners */
+  cursor: pointer;  /* Changes cursor to pointer */
+  transition: 0.3s ease; /* Smooth hover effect */
+  font-weight:bold;
+}
+
+
+button:hover {
+  opacity: 0.8; /* Slight transparency on hover */
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Ensures the navbar spans the width */
+}
+
+.navbtn-dash{ 
+  position: absolute;
+  top: -23px;
+  left: 400px; /* Adjust if needed */
+  background: transparent;
+  color: white;
+  font-size: 35px;
+}
+
+.navbtn-list{ 
+  position: absolute;
+  top: -23px;
+  left: 1000px;  /* Adjust if needed */
+  background: transparent;
+  color: white;
+  font-size: 35px;
+}
+
+.navbtn-log-out{ 
+  position: absolute;
+  top: -23px;
+  left: 1600px;  /* Adjust if needed */
+  background: transparent;
+  color: white;
+  font-size: 35px;
+}
+
+.menu-icon {
+  position: absolute;
+  top: 20px;
+  left: 30px;  /* Adjust if needed */
+  font-size: 70px;
+  color: white;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+img.top-left-logo { 
+  position: absolute;
+  top: 40px;
+  left: 120px;  /* Adjust if needed */
 }
