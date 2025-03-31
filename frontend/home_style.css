@@ -61,17 +61,18 @@ body {
 }
 
 .entry-img {
-    width: 80px; /* Adjust image width */
+    width: 150px; /* Adjust image width */
     height: auto;
     border-radius: 5px;
-    flex-shrink: 0;
+    object-fit: cover; /* Ensures the image is cropped instead of stretched */
+    object-position: center; /* Centers the cropping */
 }
 
 .entry-content {
     margin-left: 15px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex-grow: 1;
 }
 
 .title {
@@ -80,24 +81,19 @@ body {
     margin-bottom: 5px;
 }
 
-.bottom-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
 .rating {
     font-size: 20px;
     color: blue;
 }
 
 .info {
-    text-align: right;
-}
-
-.category, .date, .tags {
     font-size: 14px;
     color: gray;
-    margin: 2px 0;
+    margin-top: 5px;
+}
+
+.review {
+    font-size: 14px;
+    flex: 1;
+    margin-left: 20px;
 }
