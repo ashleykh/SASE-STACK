@@ -36,7 +36,7 @@ h2:after
 
 .scroll-box {
     width: 90%;
-    height: 30%;
+    height: 40%;
     overflow: auto;
     border: 1px solid #ccc;
     padding: 10px;
@@ -46,4 +46,58 @@ h2:after
 .content-wrapper {
     direction: ltr; /* Keep the text flowing from left to right */
     padding-right: 10px; /* This compensates for the scrollbar */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.entry {
+    display: flex;
+    background-color: #ffffff;
+    padding: 15px;
+}
+
+.entry-img {
+    width: 80px; /* Adjust image width */
+    height: auto;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.entry-content {
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.bottom-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.rating {
+    font-size: 20px;
+    color: blue;
+}
+
+.info {
+    text-align: right;
+}
+
+.category, .date, .tags {
+    font-size: 14px;
+    color: gray;
+    margin: 2px 0;
 }
