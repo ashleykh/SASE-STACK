@@ -37,10 +37,13 @@ button:hover {
     opacity: 0.8; /* Slight transparency on hover */
 }
 
+
 img.top-left {
     position: absolute;
     top: 20px;   /* Adjust as needed */
     left: 20px;  /* Adjust as needed */
+    width: 251.75px;
+    height: 76.875px;
 }
 
 .subtitle{
@@ -52,7 +55,8 @@ img.top-left {
 
 .field{
     margin-bottom:20px;
-    padding-top:20px;
+    padding-top:10px;
+    padding-bottom:10px;
     padding-right:180px;
     border:2px solid black;
 }

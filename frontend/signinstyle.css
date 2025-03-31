@@ -1,0 +1,79 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 98vh;
+    margin: 0;
+    background-image: linear-gradient(to right, #0762d8 , #2de5e0);
+    font-family: 'Incosolate', monospace;
+}
+
+h1{
+    font-size: 40px;
+    margin-bottom:0px;
+}
+
+h2{
+    font-size: 25px;
+    margin-top:0px;
+    margin-bottom:10px;
+}
+
+button {
+    display:block;
+    margin: 10px auto; /* 20px top margin; auto left/right centers it; adjust bottom margin as needed */
+    font-size: 18px;  /* Makes text larger */
+    padding: 14px 28px;  /* Increases button size */
+    background: linear-gradient(to right, #0762d8, #2de5e0); /* Gradient */
+    color: white;  /* White text */
+    border: none;  /* Removes default border */
+    border-radius: 8px;  /* Rounded corners */
+    cursor: pointer;  /* Changes cursor to pointer */
+    transition: 0.3s ease; /* Smooth hover effect */
+    font-weight:bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    opacity: 0.8; /* Slight transparency on hover */
+}
+
+img.top-left {
+    position: absolute;
+    top: 20px;   /* Adjust as needed */
+    left: 20px;  /* Adjust as needed */
+    width: 251.75px;
+    height: 76.875px;
+}
+
+.subtitle{
+    font-size: 14px;
+    margin-top:0px;
+    margin-bottom:10px;
+    color:grey;
+}
+
+.field{
+    margin-bottom:5px;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-right:180px;
+    border:2px solid black;
+    height: 10px;
+}
+
+
+.box {
+    box-sizing:border-box; /*makes padding part of the box's dimensions*/
+    flex-direction: column;
+    display: flex;
+    width: 500px;
+    height: 525px;
+    align-items: top;
+    border: 2px solid black;
+    padding-top:20px;
+    padding-left:80px;
+    padding-right:80px;
+    background:white;
+    margin-top:15px
+}
