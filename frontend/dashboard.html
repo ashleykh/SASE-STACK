@@ -34,6 +34,58 @@
         <div class ="box-catagory">
 
         </div>
- 
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Entry</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <form id="entryForm">
+        <!-- Image Upload Section -->
+                <div class="image-upload">
+                    <div class="image-preview" onclick="openFilePicker()">
+                        <span>+</span>
+                        <p>Add image</p>
+                    </div>
+                    <input type="file" id="imageInput" style="display: none;" accept="image/*">
+                </div>
+  
+        <!-- Title Input -->
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+  
+        <!-- Rating Section -->
+                <div class="form-group">
+                    <div class="rating">
+                        <span class="rating-star" data-rating="1">&#9733;</span>
+                        <span class="rating-star" data-rating="2">&#9733;</span>
+                        <span class="rating-star" data-rating="3">&#9733;</span>
+                        <span class="rating-star" data-rating="4">&#9733;</span>
+                        <span class="rating-star" data-rating="5">&#9733;</span>
+                    </div>
+                </div>
+  
+        <!-- Tags Section -->
+                <div class="form-group tags">
+                    <span>+ Tags</span>
+                    <div id="tagList"></div>
+                </div>
+  
+        <!-- Review Input -->
+                <div class="form-group">
+                    <label for="review">Review</label>
+                    <textarea id="review" name="review" rows="5" required></textarea>
+                </div>
+  
+        <!-- Done Button -->
+                <button type="submit" class="done-btn">Done</button>
+                </form>
+            </div>
+        </div>
+        <script src="dashboard.js"></script>
     </body>
-</html>
+  </html>
+ 
