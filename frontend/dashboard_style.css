@@ -35,7 +35,7 @@ button:hover {
 .navbtn-dash{ 
     position: absolute;
     top: -23px;
-    left: 400px; /* Adjust if needed */
+    left: 30%; /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -44,7 +44,7 @@ button:hover {
 .navbtn-list{ 
     position: absolute;
     top: -23px;
-    left: 1000px;  /* Adjust if needed */
+    left: 58%;  /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -53,7 +53,7 @@ button:hover {
 .navbtn-log-out{ 
     position: absolute;
     top: -23px;
-    left: 1600px;  /* Adjust if needed */
+    left: 83%;  /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -73,4 +73,198 @@ img.top-left-logo {
     position: absolute;
     top: 40px;
     left: 120px;  /* Adjust if needed */
+}
+
+.box-list{
+    position: absolute;
+    bottom: 0%;
+    box-sizing:border-box; /*makes padding part of the box's dimensions*/
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+    height: 87%;
+    align-items: top;
+    padding-top:20px;
+    background:#e9edf2;
+}
+
+.box-catagory{
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    box-sizing:border-box; /*makes padding part of the box's dimensions*/
+    flex-direction: column;
+    display: flex;
+    width: 35%;
+    height: 87%;
+    align-items: top;
+    padding-top:20px;
+    background:#e9edf2;
+    border: 3px solid black;
+}
+
+.catagory-btn{
+    background: linear-gradient(to right, #0762d8 , #2de5e0);
+    border-radius: 30px;
+    margin-top: 20px;
+    margin-left: 40%;
+    color: white;
+    font-size: 20px;
+    padding: 10px 70px;
+}
+
+.catagory-search{
+    margin-top: -5.5%;
+    margin-left: 55%;
+    border-radius: 30px;
+    height: 35px;
+    width: 300px;
+}
+
+
+/* Added Styles for Sort By */
+.sort-container {
+    position: absolute;
+    bottom: 90%;
+    display: inline-flex;
+    align-items: center;
+    background-color: white; /* Light grey background */
+    padding:  10px;
+    border-radius: 20px; /* Rounded corners */
+    font-family: sans-serif;
+    font-size: 16px;
+    margin-left: 10px; /* Add some space between Search and Sort */
+    margin-top: -5.5%; /* Align with search input */
+    margin-left: 75%; /* Position next to search input */
+}
+
+.sort-container .sort-by {
+    margin-right: 10px;
+    text-decoration: underline;
+    color: #007bff; /* Blue color for "Sort by" */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.sort-container input[list="sort-options"] {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc; /* Add a border for input */
+    background-color: #e0e0e0; /* Slightly darker grey for the input */
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.sort-container datalist {
+    background-color: #f0f0f0; /* Light grey for the datalist */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.sort-container datalist option {
+    padding: 5px 10px;
+}
+
+/* Modal styles for pop up*/
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* Pop up (on top of other elements) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+  
+.modal-content {
+    background-color: #fff; /* White background for now */
+    margin: 10% auto;  /* Center the modal */
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Add shadow for depth */
+}
+  
+.modal-header {
+    display: flex;  
+    justify-content: space-between;  /* Add space in between */
+    align-items: center;
+    margin-bottom: 20px;
+}
+  
+.modal-header h2 {
+    font-size: 24px;
+    color: #333;  /* Dark gray */
+    margin: 0;
+}
+  
+.close {
+    color: #aaa;  /* Color of close button, different from background */
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+  
+.image-upload {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+  
+.image-preview {
+    width: 150px;
+    height: 150px;
+    background-color: #ddd; /* Light gray background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 36px;
+    color: #888;
+    cursor: pointer; /* Changes the cursor to a pointer */
+}
+  
+.image-preview p {
+    margin-top: 10px;
+    font-size: 16px; /* Sets the font size for "Add image" */
+    color: #888; /* Gray text */
+}
+  
+.form-group {
+    margin-bottom: 20px; /* Adds space below each form group */
+}
+  
+.form-group label {
+    display: block; /* Makes the label a block-level element */
+    margin-bottom: 5px; 
+    font-weight: bold;
+    color: #333;
+}
+  
+.form-group input,
+.form-group textarea {
+    width: 100%; /* Makes the input/textarea fill the width */
+    padding: 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+  
+.rating {
+    display: flex; /* Aligns stars in a row */
+    justify-content: center;
+    margin-bottom: 10px;
+}
+  
+.rating-star {
+    font-size: 24px; /* Sets the size of the stars */
+    color: #ccc; /* Light gray color for inactive stars */
+    cursor: pointer;
+}
+  
+.rating-star.active {
+    color: gold; /* Changes the color to gold for active stars */
 }
