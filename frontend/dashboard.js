@@ -6,6 +6,17 @@ const entryForm = document.getElementById('entryForm');
 const imagePreview = document.querySelector('.image-preview');
 const imageInput = document.getElementById('imageInput');
 const ratingStars = document.querySelectorAll('.rating-star');
+const pullout = document.querySelector('.menu-icon');
+const categoryBox = document.querySelector('.box-catagory');
+const search = document.querySelector(".catagory-search")
+
+// close or pull out catagory list after clicking menu icon
+pullout.addEventListener('click', () => 
+  {
+    categoryBox.classList.toggle('show');
+    search.classList.toggle("show");
+    entryButton.classList.toggle("show");
+  });
 
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {
