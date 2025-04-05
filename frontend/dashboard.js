@@ -87,3 +87,42 @@ entryForm.addEventListener('submit', (event) => {
   modal.style.display = 'none';
 
 });
+
+function addCategoryName() {
+  const categoryBox = document.getElementById("buttonList");
+  // Create new category box
+  const button = document.createElement("button");
+  button.className = "category-name-btn";
+  button.innerText = "Double Click to Edit";
+  button.ondblclick = function(){categoryInput(button);}
+  categoryBox.appendChild(button);
+}
+
+function categoryInput(button) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = button.innerText;
+  input.className = "category-name-btn-input";
+
+  // Turn input to button when done editing
+  input.onblur = function(){convertToButton(input);}
+  input.onkeydown = function(event) {
+    if(event.key === "Enter") {
+      convertToButton(input);
+    }
+  };
+
+  // Put in category name 
+  button.replaceWith(input);
+  input.focus();
+}
+
+function convertToButton(input) {
+  const button = document.createElement("button");
+  button.className = "category-name-btn";
+  button.innerText = input.value.trim() || "Double Click to Edit";
+  button.ondblclick = function(){categoryInput(button);};
+
+    // Put button with category name
+  input.replaceWith(button);
+}

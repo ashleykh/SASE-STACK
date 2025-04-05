@@ -110,10 +110,10 @@ img.top-left-logo {
     width: 35%;
     height: 87%;
     align-items: top;
-    padding-top:20px;
     background:#e9edf2;
     border: 3px solid black;
     transition: left 0.7s ease-in-out;
+    padding: 0;
 }
 
 
@@ -298,4 +298,71 @@ img.top-left-logo {
   
 .rating-star.active {
     color: gold; /* Changes the color to gold for active stars */
+}
+
+.category-scroll-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    top: 10%
+}
+
+.category-list-add-btn{
+    position: relative;
+    background: linear-gradient(to right, #0762d8 , #2de5e0);
+    font-size: 30px;
+    font-weight: bold;
+    top: 9%;
+    width: 100%;
+    height: 15%;
+    border-radius: 1px;
+    border-top: 2.5px solid;
+    border-color: black;
+    margin-top: auto;
+}
+
+.category-name-container{
+    width: 100%;
+    max-width: 500px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.category-name-btn{
+    display: block;
+    color: #333;
+    width: 100%;
+    min-height: 15%;
+    padding: 10px 15px;
+    font-size: 30px;
+    text-align: left;
+    border: none;
+    border-radius: 1px;
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    background-color: #e9edf2;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden;
+    margin: 0;
+}
+
+.category-name-btn-input{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 30px;
+    text-align: left;
+    border: none;
+    background-color: white;
+    outline: none;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
 }
