@@ -14,13 +14,13 @@ const search = document.querySelector(".category-search")
 pullout.addEventListener('click', () => 
   {
     categoryBox.classList.toggle('show');
-    search.classList.toggle("show");
-    entryButton.classList.toggle("show");
 
     const boxList = document.querySelector('.box-list');
     if (categoryBox.classList.contains('show')) {
+      boxList.style.transition = 'none';
       boxList.style.width = '100%';
     } else {
+      boxList.style.transition = 'right 0.7s ease-in-out, width 0.7s ease-in-out'; // Add transition effect
       boxList.style.width = '70%'; // Reset to original width
     }
   });
