@@ -1,22 +1,31 @@
 // Get DOM elements
 const modal = document.getElementById('myModal');
-const entryButton = document.querySelector('.catagory-btn'); // Entry button
+const entryButton = document.querySelector('.category-btn'); // Entry button
 const closeModalBtn = document.querySelector('.close');
 const entryForm = document.getElementById('entryForm');
 const imagePreview = document.querySelector('.image-preview');
 const imageInput = document.getElementById('imageInput');
 const ratingStars = document.querySelectorAll('.rating-star');
 const pullout = document.querySelector('.menu-icon');
-const categoryBox = document.querySelector('.box-catagory');
-const search = document.querySelector(".catagory-search")
+const categoryBox = document.querySelector('.box-category');
+const search = document.querySelector(".category-search")
 
-// close or pull out catagory list after clicking menu icon
+// close or pull out category list after clicking menu icon
 pullout.addEventListener('click', () => 
   {
     categoryBox.classList.toggle('show');
     search.classList.toggle("show");
     entryButton.classList.toggle("show");
+
+    const boxList = document.querySelector('.box-list');
+    if (categoryBox.classList.contains('show')) {
+      boxList.style.width = '100%';
+    } else {
+      boxList.style.width = '70%'; // Reset to original width
+    }
   });
+
+
 
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {

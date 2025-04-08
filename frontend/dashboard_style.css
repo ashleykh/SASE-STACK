@@ -1,8 +1,7 @@
 /* background */
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
     margin: 0;
     background-image: linear-gradient(to right, #0762d8 , #2de5e0);
@@ -33,14 +32,21 @@ button:hover {
 .navbar {
     display: flex;
     align-items: center;
-    width: 100%; /* Ensures the navbar spans the width */
+    width: 100%;
+    height: 15vh;
+    border: 2px solid green; /* Creates the box border */
+    box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
+}
+
+/* hamburger icon on the top left */
+.menu-icon {
+    font-size: 70px;
+    color: white;
+    cursor: pointer;
 }
 
 /* dashboard button in navbar */
 .navbtn-dash{ 
-    position: absolute;
-    top: -23px;
-    left: 30%; /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -48,9 +54,6 @@ button:hover {
 
 /* list/profile button in navbar */
 .navbtn-list{ 
-    position: absolute;
-    top: -23px;
-    left: 58%;  /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
@@ -58,57 +61,56 @@ button:hover {
 
 /* logout button for navbar */
 .navbtn-log-out{ 
-    position: absolute;
-    top: -23px;
-    left: 83%;  /* Adjust if needed */
     background: transparent;
     color: white;
     font-size: 35px;
 }
 
-/* hamburger icon on the top left */
-.menu-icon {
-    position: absolute;
-    top: 20px;
-    left: 30px;  /* Adjust if needed */
-    font-size: 70px;
-    color: white;
-    margin-right: 10px;
+/* sase logo */
+img.top-left-logo { 
     cursor: pointer;
 }
 
-/* sase logo */
-img.top-left-logo { 
-    position: absolute;
-    top: 40px;
-    left: 120px;  /* Adjust if needed */
-    cursor: pointer;
+.box-container {
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;;
+    border: 2px solid orange; /* Creates the box border */
+    box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
 /* big block to hold all the items */
 .box-list{
-    position: absolute;
-    bottom: 0%;
-    box-sizing:border-box; /*makes padding part of the box's dimensions*/
-    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    flex-direction: row;
     display: flex;
-    width: 100%;
-    height: 87%;
-    align-items: top;
-    padding-top:20px;
-    background:#e9edf2;
+    /* align-items: top;  NOTE: For flex-direction: column, you might mean align-items: flex-start; */
+    align-items: flex-start; /* Align items to the start (top) of the container */
+    background: #e9edf2;
+    border: 2px solid red; /* Creates the box border */
+    /* Add transition to match the sidebar */
+    transition: left 0.7s ease-in-out, width 0.7s ease-in-out;
+    overflow-y: auto; /* Add scroll if content overflows vertically */
+    box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
-/* small block that holds catagory list */
-.box-catagory{
-    position: absolute;
-    left: -40%;
-    bottom: 0%;
+.box-list-options {
+    width: 20%;
+    height: 100%;
+    border: 2px solid black; /* Creates the box border */
+    box-sizing: border-box; /* Includes padding and border in the element's total size */
+    margin: 0 auto 0 500px; /* Adds a left margin of 50px */
+}
+
+/* small block that holds category list */
+.box-category{
     box-sizing:border-box; /*makes padding part of the box's dimensions*/
     flex-direction: column;
     display: flex;
-    width: 35%;
-    height: 87%;
+    width: 30%;
+    height: 100%;
     align-items: top;
     background:#e9edf2;
     border: 3px solid black;
@@ -117,37 +119,32 @@ img.top-left-logo {
 }
 
 
-.box-catagory.show {
-    left: 0%; 
+.box-category.show {
+    width: 0;
 }
 
 /* entry button */
-.catagory-btn{
+.category-btn{
     background: linear-gradient(to right, #0762d8 , #2de5e0);
     border-radius: 30px;
-    margin-top: 20px;
-    margin-left: 10%;
     color: white;
     font-size: 20px;
-    padding: 10px 70px;
     transition: all 0.7s ease-in-out;
 }
 
-.catagory-btn.show{
+.category-btn.show{
     margin-left: 40%;
 }
 
 /* search bar */
-.catagory-search{
-    margin-top: -5.5%;
-    margin-left: 22%;
+.category-search{
     border-radius: 30px;
     height: 35px;
-    width: 52vw;
+    width: 20vw;
     transition: all 0.7s ease-in-out;
 }
 
-.catagory-search.show{
+.category-search.show{
     margin-left: 52%;
     width: 22vw;
 }
@@ -155,18 +152,11 @@ img.top-left-logo {
 
 /* Added Styles for Sort By */
 .sort-container {
-    position: absolute;
-    bottom: 90%;
-    display: inline-flex;
     align-items: center;
     background-color: white; /* Light grey background */
-    padding:  10px;
     border-radius: 20px; /* Rounded corners */
     font-family: sans-serif;
     font-size: 16px;
-    margin-left: 10px; /* Add some space between Search and Sort */
-    margin-top: -5.5%; /* Align with search input */
-    margin-left: 75%; /* Position next to search input */
 }
 
 .sort-container .sort-by {
@@ -311,7 +301,6 @@ img.top-left-logo {
 }
 
 .category-list-add-btn{
-    position: relative;
     background: linear-gradient(to right, #0762d8 , #2de5e0);
     font-size: 30px;
     font-weight: bold;
