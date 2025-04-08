@@ -1,4 +1,13 @@
-// Get DOM elements
+// Sample information to display
+var info = {
+  'ding tea': {'wintermelon milk tea': {rating: 5, review: 'good'}, 'peach oolong tea': {rating: 4, review: 'good'}},
+  'boba tea': {'mango milk tea': {rating: 5, review: 'good'}}
+};
+
+var currentCategory = 'ding tea'; // Default category
+
+
+// Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
 const closeModalBtn = document.querySelector('.close');
@@ -29,7 +38,7 @@ pullout.addEventListener('click', () =>
 
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {
-  modal.style.display = 'block';
+  modal.style.display = 'flex';
 });
 
 // Close/Hide the modal when the close button (×) is clicked
@@ -98,13 +107,27 @@ entryForm.addEventListener('submit', (event) => {
 });
 
 function addCategoryName() {
-  const categoryBox = document.getElementById("buttonList");
-  // Create new category box
-  const button = document.createElement("button");
-  button.className = "category-name-btn";
-  button.innerText = "Double Click to Edit";
-  button.ondblclick = function(){categoryInput(button);}
-  categoryBox.appendChild(button);
+    const categoryBox = document.getElementById("buttonList");
+    
+    // Create input element directly
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = "New Category";
+    input.className = "category-name-btn-input";
+
+    categoryBox.appendChild(input);
+    input.focus(); // Auto-focus the input
+    input.select();
+
+    // Turn input to button when done editing
+    input.onblur = function(){convertToButton(input);}
+    input.onkeydown = function(event) {
+      if(event.key === "Enter") {
+        convertToButton(input);
+      }
+    };
+    
+    
 }
 
 function categoryInput(button) {
@@ -124,6 +147,7 @@ function categoryInput(button) {
   // Put in category name 
   button.replaceWith(input);
   input.focus();
+  input.select();
 }
 
 function convertToButton(input) {

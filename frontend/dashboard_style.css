@@ -195,6 +195,7 @@ img.top-left-logo {
 .modal {
     display: none; /* Hidden by default */
     position: fixed;
+    align-items: center;
     z-index: 9999; /* Pop up (on top of other elements) */
     left: 0;
     top: 0;
@@ -202,13 +203,13 @@ img.top-left-logo {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
 }
-  
+
 .modal-content {
     background-color: #fff; /* White background for now */
-    margin: 10% auto;  /* Center the modal */
     padding: 20px;
     border-radius: 8px;
-    width: 80%;
+    width: 70%;
+    height: 70%;
     max-width: 600px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Add shadow for depth */
@@ -337,7 +338,7 @@ img.top-left-logo {
     display: block;
     color: #333;
     width: 100%;
-    min-height: 15%;
+    min-height: 10vh;
     padding: 10px 15px;
     font-size: 30px;
     text-align: left;
@@ -354,14 +355,16 @@ img.top-left-logo {
 
 .category-name-btn-input{
     display: block;
+    font-weight:bold;
+    color: #333;
     width: 100%;
+    min-height: 10vh;
     padding: 10px 15px;
     font-size: 30px;
     text-align: left;
-    border: none;
-    background-color: white;
-    outline: none;
-    margin: 0;
+    background-color: #e9edf2;
     box-sizing: border-box;
+    cursor: pointer;
     overflow: hidden;
+    margin: 0;
 }
