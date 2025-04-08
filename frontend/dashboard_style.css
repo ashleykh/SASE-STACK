@@ -297,6 +297,11 @@ img.top-left-logo {
     color: gold; /* Changes the color to gold for active stars */
 }
 
+.done-btn{
+    color:white;
+    background: linear-gradient(to right, #0762d8 , #2de5e0);
+}
+
 .category-scroll-list {
     flex: 1;
     overflow-y: auto;
