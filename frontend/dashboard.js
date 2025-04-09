@@ -181,11 +181,15 @@ function selectCategoryNameInput(input) {
   
   // Add active-category class to the clicked input
   input.classList.add('active-category'); 
+  displayContent(input.value); // Display the content of the selected category
   
 }
 
 function displayContent(category) {
-  const contentBox = document.
+  const contentBox = document.querySelector('.box-list-content');
+  const paragraph = document.createElement("p");
+  paragraph.innerText = `You selected ${category}`;
+  contentBox.append(paragraph);
 }
 
 function openCategoryNameInput(input) {
