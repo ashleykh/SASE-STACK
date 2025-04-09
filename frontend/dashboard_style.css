@@ -194,8 +194,9 @@ img.top-left-logo {
 /* Modal styles for pop up*/
 .modal {
     display: none; /* Hidden by default */
-    position: fixed;
+    justify-content: center;
     align-items: center;
+    position: fixed;
     z-index: 9999; /* Pop up (on top of other elements) */
     left: 0;
     top: 0;
