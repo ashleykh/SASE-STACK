@@ -286,11 +286,7 @@ img.top-left-logo {
     align-items: center; /* Centers items horizontally */
 }
 
-.form-group {
-    margin-bottom: 20px; /* Adds space below each form group */
-    width: 100%;
-    height: 30%;
-}
+
   
 .form-group label {
     display: block; /* Makes the label a block-level element */
@@ -302,6 +298,7 @@ img.top-left-logo {
 .form-group input,
 .form-group textarea {
     width: 100%; /* Makes the input/textarea fill the width */
+
     padding-bottom: 10px; 
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -323,6 +320,7 @@ img.top-left-logo {
 .rating-star.active {
     color: gold; /* Changes the color to gold for active stars */
 }
+
 
 .done-btn{
     color:white;
