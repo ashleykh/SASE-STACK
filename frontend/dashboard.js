@@ -4,7 +4,7 @@ var info = {
   'boba tea': {'mango milk tea': {rating: 5, review: 'good'}}
 };
 
-var currentCategory = 'ding tea'; // Default category
+var currentCategory; // Default category
 
 
 // Get DOM (Document Object Model) elements
@@ -18,6 +18,15 @@ const ratingStars = document.querySelectorAll('.rating-star');
 const pullout = document.querySelector('.menu-icon');
 const categoryBox = document.querySelector('.box-category');
 const search = document.querySelector(".category-search")
+
+
+
+// --- NEW CODE: Run this when the DOM is ready ---
+document.addEventListener('DOMContentLoaded', () => {
+  for (const categoryName in info) {
+    addCategoryName(categoryName); // Add category names to the list
+  }
+});
 
 // close or pull out category list after clicking menu icon
 pullout.addEventListener('click', () => 
@@ -106,14 +115,15 @@ entryForm.addEventListener('submit', (event) => {
 
 });
 
-function addCategoryName() {
+
+function addCategoryName(name = "New Category") {
     const categoryBox = document.getElementById("buttonList");
-    
-    // Create input element directly
     const input = document.createElement("input");
     input.type = "text";
-    input.value = "New Category";
     input.className = "category-name-btn-input";
+    // Create input element directly
+    input.value = name;
+    
 
     categoryBox.appendChild(input);
     input.focus(); // Auto-focus the input
@@ -126,20 +136,19 @@ function addCategoryName() {
         convertToButton(input);
       }
     };
-    
-    
 }
 
 function categoryInput(button) {
   const input = document.createElement("input");
-  input.type = "text";
   input.value = button.innerText;
+  input.type = "text";
   input.className = "category-name-btn-input";
-
   // Turn input to button when done editing
   input.onblur = function(){convertToButton(input);}
+
   input.onkeydown = function(event) {
     if(event.key === "Enter") {
+      
       convertToButton(input);
     }
   };
@@ -155,7 +164,30 @@ function convertToButton(input) {
   button.className = "category-name-btn";
   button.innerText = input.value.trim() || "Double Click to Edit";
   button.ondblclick = function(){categoryInput(button);};
+  button.onclick = function() { setActiveCategory(button); };
 
     // Put button with category name
   input.replaceWith(button);
+}
+
+function setActiveCategory(buttonToActivate) {
+  if (!categoryButtonList) return; // Exit if container doesn't exist
+
+  // Remove active class from all buttons in the list
+  const allButtons = categoryButtonList.querySelectorAll('.category-name-btn');
+  allButtons.forEach(btn => btn.classList.remove('active-category'));
+
+  if (buttonToActivate && buttonToActivate.classList.contains('category-name-btn')) {
+      // Add active class to the specified button
+      buttonToActivate.classList.add('active-category');
+      // Update the global variable with the category NAME
+      currentCategory = buttonToActivate.innerText;
+      console.log("Active category:", currentCategory);
+       // Add any other actions needed when a category is selected here
+       // e.g., displayItemsForCategory(currentCategory);
+  } else {
+      // No valid button provided, clear selection
+      currentCategory = null;
+      console.log("No category selected.");
+  }
 }

@@ -206,6 +206,8 @@ img.top-left-logo {
 }
 
 .modal-content {
+    display: flex;
+    flex-direction: column;
     background-color: #fff; /* White background for now */
     padding: 20px;
     border-radius: 8px;
@@ -218,6 +220,7 @@ img.top-left-logo {
   
 .modal-header {
     display: flex;  
+    width: 100%;
     justify-content: space-between;  /* Add space in between */
     align-items: center;
     margin-bottom: 20px;
@@ -227,6 +230,15 @@ img.top-left-logo {
     font-size: 24px;
     color: #333;  /* Dark gray */
     margin: 0;
+}
+
+#entryForm {
+    display: flex;  
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
   
 .close {
@@ -238,6 +250,8 @@ img.top-left-logo {
   
 .image-upload {
     display: flex;
+    width: 30%;
+    height: 40%;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -263,8 +277,19 @@ img.top-left-logo {
     color: #888; /* Gray text */
 }
   
+.form-details-column {
+    display: flex;
+    flex-direction: column; /* Aligns items in a column */
+    width: 70%;
+    height: 40%;
+    justify-content: center; /* Centers items vertically */
+    align-items: center; /* Centers items horizontally */
+}
+
 .form-group {
     margin-bottom: 20px; /* Adds space below each form group */
+    width: 100%;
+    height: 30%;
 }
   
 .form-group label {
@@ -277,7 +302,7 @@ img.top-left-logo {
 .form-group input,
 .form-group textarea {
     width: 100%; /* Makes the input/textarea fill the width */
-    padding: 10px; 
+    padding-bottom: 10px; 
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
@@ -353,6 +378,10 @@ img.top-left-logo {
     overflow: hidden;
     margin: 0;
 }
+
+.category-name-btn.active-category {
+    background-color: #cce5ff;
+  }
 
 .category-name-btn-input{
     display: block;
