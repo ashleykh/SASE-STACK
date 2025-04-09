@@ -5,6 +5,7 @@ var info = {
 };
 
 var currentCategory; // Default category
+var categoryNames = []; // Array to store category names
 
 
 // Get DOM (Document Object Model) elements
@@ -24,7 +25,7 @@ const search = document.querySelector(".category-search")
 // --- NEW CODE: Run this when the DOM is ready ---
 document.addEventListener('DOMContentLoaded', () => {
   for (const categoryName in info) {
-    addCategoryName(categoryName); // Add category names to the list
+    populateInitialCategoryNames(categoryName) // Add category names to the list
   }
 });
 
@@ -116,78 +117,118 @@ entryForm.addEventListener('submit', (event) => {
 });
 
 
-function addCategoryName(name = "New Category") {
+function populateInitialCategoryNames(name) {
+  const categoryBox = document.getElementById("buttonList");
+  const input = document.createElement("input");
+  input.className = "category-name-btn-input";
+  input.type = "text";
+  
+  input.value = name;
+  input.dataset.originalValue = input.value;
+  categoryBox.appendChild(input);
+
+  // Turn input to button when done editing
+  input.onblur = function(){closeCategoryNameInput(input);};
+  input.ondblclick = function(){openCategoryNameInput(input);};
+  input.onclick = function(){selectCategoryNameInput(input);};
+  input.onkeydown = function(event) {
+    if(event.key === "Enter") {
+      input.blur(); // Better to blur than just set readOnly
+    }
+  };
+}
+
+function addCategoryName(name = "cat") {
     const categoryBox = document.getElementById("buttonList");
     const input = document.createElement("input");
-    input.type = "text";
     input.className = "category-name-btn-input";
-    // Create input element directly
-    input.value = name;
+    input.type = "text";
     
-
+    // Handle duplicate names at creation time
+    let uniqueName = name;
+    if(uniqueName in info) {
+      let i = 1;
+      while ((uniqueName + " (" + i + ")") in info) {
+        i++;
+      }
+      uniqueName = name + " (" + i + ")";
+    }
+    
+    input.value = uniqueName;
+    info[uniqueName] = {}; // Initialize as empty object
+    input.dataset.originalValue = uniqueName; // Store the original value
+    
     categoryBox.appendChild(input);
-    input.focus(); // Auto-focus the input
     input.select();
 
     // Turn input to button when done editing
-    input.onblur = function(){convertToButton(input);}
+    input.onblur = function(){closeCategoryNameInput(input);};
+    input.ondblclick = function(){openCategoryNameInput(input);};
+    input.onclick = function(){selectCategoryNameInput(input);};
     input.onkeydown = function(event) {
       if(event.key === "Enter") {
-        convertToButton(input);
+        input.blur(); // Better to blur than just set readOnly
       }
     };
 }
 
-function categoryInput(button) {
-  const input = document.createElement("input");
-  input.value = button.innerText;
-  input.type = "text";
-  input.className = "category-name-btn-input";
-  // Turn input to button when done editing
-  input.onblur = function(){convertToButton(input);}
+function selectCategoryNameInput(input) {
+  // Remove active-category class from all inputs
+  const allInputs = document.querySelectorAll('.category-name-btn-input');
+  allInputs.forEach(item => {
+    item.classList.remove('active-category');
+  });
+  
+  // Add active-category class to the clicked input
+  input.classList.add('active-category'); 
+  
+}
 
-  input.onkeydown = function(event) {
-    if(event.key === "Enter") {
-      
-      convertToButton(input);
-    }
-  };
+function displayContent(category) {
+  const contentBox = document.
+}
 
-  // Put in category name 
-  button.replaceWith(input);
+function openCategoryNameInput(input) {
+  input.readOnly = false;
+  input.dataset.originalValue = input.value; // Store current value before editing
   input.focus();
   input.select();
+  input.classList.add("active"); // Add active class for styling
 }
 
-function convertToButton(input) {
-  const button = document.createElement("button");
-  button.className = "category-name-btn";
-  button.innerText = input.value.trim() || "Double Click to Edit";
-  button.ondblclick = function(){categoryInput(button);};
-  button.onclick = function() { setActiveCategory(button); };
-
-    // Put button with category name
-  input.replaceWith(button);
-}
-
-function setActiveCategory(buttonToActivate) {
-  if (!categoryButtonList) return; // Exit if container doesn't exist
-
-  // Remove active class from all buttons in the list
-  const allButtons = categoryButtonList.querySelectorAll('.category-name-btn');
-  allButtons.forEach(btn => btn.classList.remove('active-category'));
-
-  if (buttonToActivate && buttonToActivate.classList.contains('category-name-btn')) {
-      // Add active class to the specified button
-      buttonToActivate.classList.add('active-category');
-      // Update the global variable with the category NAME
-      currentCategory = buttonToActivate.innerText;
-      console.log("Active category:", currentCategory);
-       // Add any other actions needed when a category is selected here
-       // e.g., displayItemsForCategory(currentCategory);
-  } else {
-      // No valid button provided, clear selection
-      currentCategory = null;
-      console.log("No category selected.");
+function closeCategoryNameInput(input) {
+  const originalValue = input.dataset.originalValue;
+  
+  // If the value didn't change, do nothing to the object
+  if(input.value === originalValue) {
+    input.readOnly = true;
+    console.log(info);
+    return;
   }
+  
+  // If new value already exists in info (but isn't the current one)
+  if(input.value in info) {
+    let i = 1;
+    while ((input.value + " (" + i + ")") in info) {
+      i++;
+    }
+    input.value = input.value + " (" + i + ")";
+  }
+  
+  // If original value exists in info, rename the key
+  if(originalValue in info) {
+    // Save the contents
+    const contents = info[originalValue];
+    // Delete the old key
+    delete info[originalValue];
+    // Create new key with the same contents
+    info[input.value] = contents;
+  } else {
+    // This normally shouldn't happen, but add it as a fallback
+    info[input.value] = {};
+  }
+
+  input.dataset.originalValue = input.value; // Update the stored value
+  input.readOnly = true;
+  console.log(info);
 }

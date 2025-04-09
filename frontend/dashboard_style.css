@@ -142,10 +142,11 @@ img.top-left-logo {
     background: linear-gradient(to right, #0762d8 , #2de5e0);
     border-radius: 30px;
     color: white;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     transition: all 0.7s ease-in-out;
 }
+
 
 /* search bar */
 .category-search{
@@ -382,8 +383,10 @@ img.top-left-logo {
 }
 
 .category-name-btn.active-category {
-    background-color: #cce5ff;
-  }
+    background-color: lightblue; /* Or any highlight style you prefer */
+    /* Add other styles like font-weight if desired */
+    /* font-weight: bold; */
+}
 
 .category-name-btn-input{
     display: block;
@@ -400,3 +403,7 @@ img.top-left-logo {
     overflow: hidden;
     margin: 0;
 }
+
+.category-name-btn-input.active-category {
+    background-color: lightblue;
+  }
