@@ -30,6 +30,13 @@ users = session.query(User).all()
 
 session.close()
 
+info = {
+  'ding tea': {'wintermelon milk tea': {'rating': 5, 'review': 'good'},
+               'peach oolong tea': {'rating': 4, 'review': 'good'}},
+  'kungfu tea': {'mango milk tea': {'rating': 5, 'review': 'good'}}
+}
+
+### THIS IS FOR THE SERVER ###
 @app.route('/sign-up', methods=['POST'])
 def sign_up():
     data = request.get_json()
