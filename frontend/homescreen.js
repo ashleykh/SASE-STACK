@@ -17,7 +17,22 @@ var info = {
       'yiyi': { rating: 5, review: 'should be a mandatory viewing every 5 years, so much to learn from this.it’s impossible to see everything this has to offer off a single viewing so it only makes...', image: '../images/yiyi.jpg' }
     }
   };
+
+  var stats = {
+    total_category: 4,
+    recent_creation: 7,
+    average_rating: 3.7,
+    total_entries: 54
+  };
   
+  const descriptions = {
+    recent_creation: "new entries this month",
+    total_category: "lists made in lifetime",
+    average_rating: "average rating",
+    total_entries: "total entries made"
+  };
+
+
   // Function to display an individual item
   function displayItemInfo(title, rating, review, image, contentBox)
    {
@@ -76,6 +91,7 @@ var info = {
     // Add the entry div to the passed contentBox
     contentBox.appendChild(entryDiv);
   }
+
   
   // Function to populate the content dynamically for 'info'
   function populateContent() 
@@ -118,7 +134,28 @@ var info = {
       }
     }
   }
+
+  function populateStats() 
+  {
+    const statsBox = document.querySelector('.box-stats'); // Make sure this exists in HTML
+  
+    for (const key in descriptions) {
+      const p = document.createElement('p');
+      p.classList.add('stat');
+  
+      const span = document.createElement('span');
+      span.classList.add('number');
+      span.textContent = stats[key];
+  
+      p.appendChild(span);
+      p.append(` ${descriptions[key]}`);
+  
+      statsBox.appendChild(p);
+    }
+  }
   
   populateContent();
   
   populateBest();
+  
+  populateStats();
