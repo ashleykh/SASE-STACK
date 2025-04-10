@@ -38,12 +38,18 @@ button:hover {
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
+.navbar-left-group {
+    display: flex;
+    align-items: center;
+    gap: 3vh;
+}
 
 /* hamburger icon on the top left */
 .menu-icon {
     font-size: 70px;
     color: white;
     cursor: pointer;
+    margin-left: 1vh;
 }
 
 /* dashboard button in navbar */
