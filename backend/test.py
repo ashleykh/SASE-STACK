@@ -23,15 +23,17 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # New User attributes to add to database
-new_user = User(username='sase stack', password='password')
-session.add(new_user)
+#new_user = User(username='sase stack', password='password')
+# Delete all entries from User table
+session.query(User).delete() # Delete all users from database
 session.commit()
 
 # Get user that has username 'sase stack'
-added_user = session.query(User).filter_by(username='sase stack').first()
+'''added_user = session.query(User).filter_by(username='sase stack').first()
 if added_user:
     print(f"################################# User {added_user.username} added to database #################################")
 else:
     print("Not added")
+'''
 
 session.close()

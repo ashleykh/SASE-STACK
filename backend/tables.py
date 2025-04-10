@@ -21,7 +21,8 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    username = Column(String)
+    name = Column(String)
+    email = Column(String)
     password = Column(String)
 
 # Create tables and .db file if it doesn't exist
