@@ -46,7 +46,7 @@ button:hover {
 
 /* hamburger icon on the top left */
 .menu-icon {
-    font-size: 70px;
+    font-size: 7vh;
     color: white;
     cursor: pointer;
     margin-left: 1vh;
@@ -75,6 +75,7 @@ button:hover {
 
 /* sase logo */
 img.top-left-logo { 
+    height: 7vh;
     cursor: pointer;
 }
 
