@@ -19,11 +19,47 @@ var info = {
   };
 
   var stats = {
-    total_category: 4,
-    recent_creation: 7,
-    average_rating: 3.7,
-    total_entries: 54
+    total_category: 0, //get total catagories
+    recent_creation: 0, //get how many items they created
+    average_rating: 0, // get average ratings
+    total_entries: 0 // get how many entries there are
   };
+
+  function computeStats(info, best) {
+    let totalEntries = 0;
+    let totalRating = 0;
+    let numCategories = 0;
+  
+    const seenCategories = new Set();
+  
+    for (const category in info) {
+      seenCategories.add(category);
+      for (const item in info[category]) {
+        totalEntries++;
+        totalRating += info[category][item].rating;
+      }
+    }
+  
+    for (const category in best) {
+      seenCategories.add(category);
+      for (const item in best[category]) {
+        totalEntries++;
+        totalRating += best[category][item].rating;
+      }
+    }
+  
+    const averageRating = totalEntries > 0 ? (totalRating / totalEntries).toFixed(1) : 0;
+  
+    return {
+      total_category: seenCategories.size,
+      recent_creation: totalEntries,
+      average_rating: parseFloat(averageRating),
+      total_entries: totalEntries
+    };
+  }
+
+  stats = computeStats(info,best);
+  
   
   const descriptions = {
     recent_creation: "new entries this month",
@@ -157,5 +193,5 @@ var info = {
   populateContent();
   
   populateBest();
-  
+
   populateStats();
