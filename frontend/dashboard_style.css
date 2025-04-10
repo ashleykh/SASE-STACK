@@ -54,21 +54,22 @@ button:hover {
 
 /* dashboard button in navbar */
 .navbtn-dash{ 
-    background: transparent;
+    background: rgba(0, 0, 0, 0.1);
     color: white;
     font-size: 35px;
 }
 
 /* list/profile button in navbar */
 .navbtn-list{ 
-    background: transparent;
+    background: rgba(0, 0, 0, 0.1);;
     color: white;
     font-size: 35px;
 }
 
 /* logout button for navbar */
 .navbtn-log-out{ 
-    background: transparent;
+    background: rgba(0, 0, 0, 0.1);
+    margin-right: 2vh;
     color: white;
     font-size: 35px;
 }
