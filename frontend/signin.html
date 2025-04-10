@@ -14,7 +14,7 @@
             <h1>Sign-Up</h1>
             <p class="subtitle">Please enter your details below.</p>
             
-            <form action="/login" method="POST">
+            <form id="signup-form">
                 <h2>Name</h2>
                 <input class="field" type="name" name="name" placeholder="" required>
                 <h2>Email Address</h2>
@@ -22,10 +22,11 @@
                 <h2>Password</h2>
                 <input class="field" type="password" name="password" placeholder="" required>
                 <h2>Confirm Password</h2>
-                <input class="field" type="password" name="password" placeholder="" required>
+                <input class="field" type="password" name="confirm-password" placeholder="" required>
                 <p class="subtitle">Already have an account? <a href="index.html" class="signup-link">Log In</a></p>
                 <button type="submit">Sign Up</button>
             </form>
         </div>
+        <script src="signin.js"></script>
     </body>
 </html>
