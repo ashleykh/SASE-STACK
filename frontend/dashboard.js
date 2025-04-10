@@ -187,9 +187,59 @@ function selectCategoryNameInput(input) {
 
 function displayContent(category) {
   const contentBox = document.querySelector('.box-list-content');
-  const paragraph = document.createElement("p");
-  paragraph.innerText = `You selected ${category}`;
-  contentBox.append(paragraph);
+  contentBox.textContent = '';
+  // Recieves all content from category
+  for (const item in info[category]) {
+    const { rating, review } = info[category][item];
+
+    displayItemInfo(item,rating,review) // Add in picture data!
+  }
+
+}
+
+function displayItemInfo(title, rating, review) {
+  const contentBox = document.querySelector('.box-list-content');
+
+  // Create entry card
+  const entryDiv = document.createElement('div');
+  entryDiv.className = 'entry-card';
+
+  // Info container
+  const infoDiv = document.createElement('div');
+  infoDiv.className = 'entry-info';
+
+  // Title
+  const titleEl = document.createElement('h4');
+  titleEl.className = 'entry-title';
+  titleEl.textContent = title;
+
+  // Star rating
+  const stars = document.createElement('div');
+  stars.className = 'entry-stars';
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement('span');
+    star.textContent = '★';
+    if (i < rating) {
+      star.style.color = '#3498db'; // Highlighted star
+    } else {
+      star.style.color = '#ccc'; // Unhighlighted star
+    }
+    star.style.fontSize = '24px';
+    stars.appendChild(star);
+  }
+
+  // Review
+  const reviewEl = document.createElement('p');
+  reviewEl.className = 'entry-review';
+  reviewEl.textContent = review;
+
+  // Assemble and append
+  infoDiv.appendChild(titleEl);
+  infoDiv.appendChild(stars);
+  infoDiv.appendChild(reviewEl);
+
+  entryDiv.appendChild(infoDiv);
+  contentBox.appendChild(entryDiv);
 }
 
 function displayContent(category) {
