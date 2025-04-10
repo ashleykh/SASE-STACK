@@ -33,7 +33,7 @@ button:hover {
     align-items: center;
     justify-content: space-between; /* Ensures items are spaced out */
     width: 100%;
-    height: 15vh;
+    height: 10vh;
     border: 2px solid green; /* Creates the box border */
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
@@ -73,7 +73,7 @@ img.top-left-logo {
 }
 
 .box-container {
-    height: 85vh;
+    height: 90vh;
     display: flex;
     flex-direction: row;;
     border: 2px solid orange; /* Creates the box border */
