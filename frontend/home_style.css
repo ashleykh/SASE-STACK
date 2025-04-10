@@ -90,7 +90,7 @@ img.top-left-logo {
     /* align-items: top;  NOTE: For flex-direction: column, you might mean align-items: flex-start; */
     align-items: flex-start; /* Align items to the start (top) of the container */
     background: #e9edf2;
-    border: 2px solid red; /* Creates the box border */
+    border: 2px solid #d0d5d6; /* Creates the box border */
     /* Add transition to match the sidebar */
     transition: auto 0.7s ease-in-out, width 0.7s ease-in-out;
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
@@ -134,7 +134,7 @@ h2:after
     /* align-items: top;  NOTE: For flex-direction: column, you might mean align-items: flex-start; */
     align-items: flex-start; /* Align items to the start (top) of the container */
     background: #e9edf2;
-    border: 2px solid red; /* Creates the box border */
+    border: 2px solid #d0d5d6; /* Creates the box border */
     /* Add transition to match the sidebar */
     transition: auto 0.7s ease-in-out, width 0.7s ease-in-out;
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */

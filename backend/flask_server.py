@@ -18,7 +18,7 @@ CORS(app, origins=["http://127.0.0.1:5500"], methods=["GET", "POST", "OPTIONS"])
 
 directory = 'backend'
 db_filename = 'User.db'
-db_path = f"{os.path.join(os.getcwd(), directory, db_filename)}"
+db_path = f"{os.path.join(os.getcwd(), db_filename)}"
 
 # Create an engine object and a session object to connect to database and query/commit data
 engine = create_engine(f"sqlite:///{db_path}", echo=True, connect_args={"check_same_thread":False})

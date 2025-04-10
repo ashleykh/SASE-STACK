@@ -3,12 +3,12 @@ var info =
 {
     'ding tea': 
     {
-        'wintermelon milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' },
-        'peach oolong tea': { rating: 4, review: 'good', image: '../images/yiyi.jpg' }
+        'Wintermelon Milk Tea': { rating: 5, review: 'yummiest tea hands down 🤤🤤🤤', image: '../images/wintermelon.png' },
+        'Peach Oolong Tea': { rating: 4, review: 'good 🧋', image: '../images/peach.png' }
     },
     'boba tea': 
     {
-        'mango milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' }
+        'Mango Milk Tea': { rating: 5, review: 'YUM DOT COM?!?! coulda had more mango tho ngl', image: '../images/mango.jpeg' }
     }
 };
 
@@ -16,7 +16,7 @@ var best =
 {
     'bestest': 
     {
-        'yiyi': { rating: 5, review: 'should be a mandatory viewing every 5 years, so much to learn from this.it’s impossible to see everything this has to offer off a single viewing so it only makes...', image: '../images/yiyi.jpg' }
+        'Yiyi': { rating: 5, review: 'Should be a mandatory viewing every 5 years, so much to learn from this. It’s impossible to see everything this has to offer off a single viewing so it only makes...', image: '../images/yiyi.jpg' }
     }
 };
 
