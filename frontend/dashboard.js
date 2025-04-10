@@ -11,7 +11,7 @@ var categoryNames = []; // Array to store category names
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
-const closeModalBtn = document.querySelector('.close');
+const closeModalBtn = document.querySelector('.clinfoose');
 const entryForm = document.getElementById('entryForm');
 const imagePreview = document.querySelector('.image-preview');
 const imageInput = document.getElementById('imageInput');
@@ -24,9 +24,15 @@ const search = document.querySelector(".category-search")
 
 // --- NEW CODE: Run this when the DOM is ready ---
 document.addEventListener('DOMContentLoaded', () => {
-  for (const categoryName in info) {
-    populateInitialCategoryNames(categoryName) // Add category names to the list
-  }
+  fetch('/api/info')
+  .then(response => response.json())
+  .then(data => {
+      window.info = data; // Store the data in the global variable
+    for (const categoryName in info) {
+      populateInitialCategoryNames(categoryName); // Add category names to the list
+    }
+  })
+  .catch(error => console.error('Error fetching data:', error));
 });
 
 // close or pull out category list after clicking menu icon
