@@ -15,8 +15,11 @@ form.addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(result => {
-        console.log('Server response:', result);
-        // You can redirect or show a message here if you want
+        if (result.status === 'success') {
+            window.location.href = 'dashboard.html';
+        } else {
+            console.log('Error:', result.message);
+        }
     })
     .catch(error => {
         console.error('Error:', error);
