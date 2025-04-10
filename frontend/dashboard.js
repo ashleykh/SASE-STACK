@@ -1,9 +1,4 @@
 // Sample information to display
-var info = {
-  'ding tea': {'wintermelon milk tea': {rating: 5, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
-  'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
-};
-
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
 

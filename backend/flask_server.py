@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.orm import sessionmaker
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from tables import User
 import os
 import re
@@ -64,6 +64,31 @@ def sign_up():
     session.close()
 
     return jsonify({'status': 'success', 'message': 'User registered successfully'})
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    if not all([email, password]):
+        return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
+
+    session = Session()
+
+    # Check if user exists
+    user = session.query(User).filter_by(email=email).first()
+    if not user:
+        session.close()
+        return jsonify({'status': 'error', 'message': 'User does not exist'}), 400
+
+    # Check password
+    if not check_password_hash(user.password, password):
+        session.close()
+        return jsonify({'status': 'error', 'message': 'Invalid password'}), 400
+
+    session.close()
+    return jsonify({'status': 'success', 'message': 'Login successful'})
 
 if __name__ == '__main__':
     app.run(debug=True)
