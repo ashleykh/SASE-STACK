@@ -16,7 +16,7 @@ form.addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(result => {
         if (result.status === 'success') {
-            window.location.href = 'dashboard.html';
+            window.location.href = 'homescreen.html';
         } else {
             console.log('Error:', result.message);
         }
