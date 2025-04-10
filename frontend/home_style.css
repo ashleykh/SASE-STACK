@@ -184,9 +184,16 @@ h2:after
 }
 
 .box-stats{
+    direction: ltr;
     width: 90%;
     height: auto;
     border: 1px solid #ccc;
     padding: 10px;
 
+}
+
+.number {
+    flex-direction: row-reverse;
+    font-weight: bold;
+    font-size: 1.5em;
 }
