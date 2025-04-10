@@ -1,7 +1,7 @@
 // Sample information to display
 var info = {
-  'ding tea': {'wintermelon milk tea': {rating: 5, review: 'good'}, 'peach oolong tea': {rating: 4, review: 'good'}},
-  'boba tea': {'mango milk tea': {rating: 5, review: 'good'}}
+  'ding tea': {'wintermelon milk tea': {rating: 5, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
+  'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
 };
 
 var currentCategory; // Default category
@@ -92,6 +92,7 @@ ratingStars.forEach((star, index) => {
 });
 
 // Record form submission
+// Record form submission
 entryForm.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevent the form from refreshing the page
 
@@ -100,7 +101,24 @@ entryForm.addEventListener('submit', (event) => {
   const review = document.getElementById('review').value;
   const rating = Array.from(ratingStars).filter(star => star.classList.contains('active')).length;
 
-  console.log('New Entry Added:', { title, review, rating }); // Logs the data/send to database
+  // Check if a category is selected
+  if (!currentCategory) {
+    alert('Please select a category first!');
+    return;
+  }
+
+  // Initialize category if it doesn't exist in info
+  if (!info[currentCategory]) {
+    info[currentCategory] = {}; 
+  }
+
+  // Add the new entry with its title, rating, and review
+  info[currentCategory][title] = {
+    rating: rating,
+    review: review
+  };
+
+  console.log('New Entry Added:', { category: currentCategory, title, rating, review });
 
   // Clear the form fields
   entryForm.reset();
@@ -114,7 +132,9 @@ entryForm.addEventListener('submit', (event) => {
   // Close the modal
   modal.style.display = 'none';
 
+  displayContent(currentCategory);
 });
+
 
 
 function populateInitialCategoryNames(name) {
@@ -181,15 +201,80 @@ function selectCategoryNameInput(input) {
   
   // Add active-category class to the clicked input
   input.classList.add('active-category'); 
+  currentCategory = input.value;
   displayContent(input.value); // Display the content of the selected category
   
 }
 
 function displayContent(category) {
   const contentBox = document.querySelector('.box-list-content');
-  const paragraph = document.createElement("p");
-  paragraph.innerText = `You selected ${category}`;
-  contentBox.append(paragraph);
+  contentBox.textContent = '';
+  // Recieves all content from category
+  for (const item in info[category]) {
+    const { rating, review } = info[category][item];
+
+    displayItemInfo(item,rating,review, image) // Add in picture data!
+  }
+
+}
+
+function displayContent(category) {
+  const contentBox = document.querySelector('.box-list-content');
+  contentBox.textContent = '';
+  // Recieves all content from category
+  for (const item in info[category]) {
+    const { rating, review, image } = info[category][item];
+
+    displayItemInfo(item,rating,review,image) // Add in picture data!
+  }
+
+}
+
+function displayItemInfo(title, rating, review, image) {
+  const contentBox = document.querySelector('.box-list-content');
+
+  const imageDiv = document.createElement('div');
+  imageDiv.className = 'entry-img';
+
+  // Create entry card
+  const entryDiv = document.createElement('div');
+  entryDiv.className = 'entry-card';
+
+  // Info container
+  const infoDiv = document.createElement('div');
+  infoDiv.className = 'entry-info';
+
+  // Title
+  const titleEl = document.createElement('h4');
+  titleEl.className = 'entry-title';
+  titleEl.textContent = title;
+
+  // Star rating
+  const stars = document.createElement('div');
+  stars.className = 'entry-stars';
+  for (let i = 0; i < 5; i++) {
+    const star = document.createElement('span');
+    star.textContent = '★';
+    if (i < rating) {
+      star.style.color = '#3498db'; // Highlighted star
+    } else {
+      star.style.color = '#ccc'; // Unhighlighted star
+    }
+    star.style.fontSize = '24px';
+    stars.appendChild(star);
+  }
+
+  // Review
+  const reviewEl = document.createElement('p');
+  reviewEl.className = 'entry-review';
+  reviewEl.textContent = review;
+
+  // Assemble and append
+  infoDiv.appendChild(titleEl);
+  infoDiv.appendChild(stars);
+  infoDiv.appendChild(reviewEl);
+  entryDiv.appendChild(infoDiv);
+  contentBox.appendChild(entryDiv);
 }
 
 function openCategoryNameInput(input) {
