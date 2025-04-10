@@ -73,7 +73,7 @@ img.top-left-logo {
 }
 
 .box-container {
-    height: 85vh;
+    height: 84.99vh;
     display: flex;
     flex-direction: row;;
     border: 2px solid orange; /* Creates the box border */
@@ -83,7 +83,6 @@ img.top-left-logo {
 /* big block to hold all the items */
 .box-recent{
     width: 50%;
-    height: 85vh;
     flex-direction: row;
     display: flex;
     flex-direction: column;
@@ -97,6 +96,12 @@ img.top-left-logo {
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
+h1::after
+{
+    content: ' ';
+    display: block;
+    width: 90%;
+}
 
 h2:after
 {
@@ -108,7 +113,7 @@ h2:after
 
 .scroll-box {
     width: 90%;
-    height: 100%;
+    height: auto;
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
@@ -121,9 +126,7 @@ h2:after
 }
 
 .box-lead{
-    
     width: 50%;
-    height: 85vh;
     flex-direction: row;
     display: flex;
     flex-direction: column;
@@ -178,4 +181,12 @@ h2:after
     font-size: 14px;
     flex: 1;
     margin-left: 20px;
+}
+
+.box-stats{
+    width: 90%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+
 }
