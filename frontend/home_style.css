@@ -83,6 +83,7 @@ img.top-left-logo {
 /* big block to hold all the items */
 .box-recent{
     width: 50%;
+    padding-left: 30px; /*small aesthetic change*/
     flex-direction: row;
     display: flex;
     flex-direction: column;
@@ -128,6 +129,7 @@ h2:after
 .box-lead{
     width: 50%;
     flex-direction: row;
+    padding-left: 30px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
