@@ -36,7 +36,7 @@ def sign_up():
     name = data.get('name')
     email = data.get('email')
     password = data.get('password')
-    confirm_password = data.get('confirm_password')
+    confirm_password = data.get('confirm-password')
 
     if not all([name, email, password, confirm_password]):
         return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
@@ -56,7 +56,7 @@ def sign_up():
     hashed_password = generate_password_hash(password)
 
     # Create new user
-    new_user = User(id=0, name=name, email=email, password=hashed_password)
+    new_user = User(name=name, email=email, password=hashed_password)
 
     # Add to database
     session.add(new_user)
