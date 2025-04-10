@@ -11,108 +11,98 @@
     <div class="navbar">
         <div class="menu-icon">&#9776;</div>
         <img class ="top-left-logo"src="../images/sase_logo_white.png" alt="Logo">
-        <button type="button"class ="navbtn-dash">Dashboard</button>
-        <button type="button"class ="navbtn-list">Lists</button>
+        <button onclick="location.href= 'dashboard.html'"type="button"class ="navbtn-dash">Dashboard</button>
+        <button type="button"class ="navbtn-list">Profile</button>
         <button onclick="location.href= 'index.html'" type="button" class="navbtn-log-out">Logout</button>
     </div>
-    <div class="body-container">
-        <div class="split left">
-            <div class="centered">
-                <h2>Recent Entries</h2>
-            </div>
+
+    <div class="box-container">
+        <div class="box-recent" id="box-recent">
+            <h1>WELCOME </h1>
+            <h2>Recent Entries</h2>
             <div class="scroll-box">
                 <div class="content-wrapper">
-                    <h1>Test</h1>
-                    <p> This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                        This is some text that will overflow and create a scrollbar.
-                    </p>
+                    <!-- <div class="entry">
+                        <img class="entry-img" src="../images/yiyi.jpg" alt="entry image">
+                        <div class="entry-content">
+                            <h3 class="title">“Yi Yi”</h3>
+                            <div class="bottom-section">
+                                <div class="rating">★★★★★</div>
+                                <div class="info">
+                                    <p class="category">in Movies Watched</p>
+                                    <p class="date">on Tuesday December 31, 2024</p>
+                                    <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review">
+                            should be a mandatory viewing every 5 years, so much to learn from this.
+                            it’s impossible to see everything this has to offer off a single viewing so it only makes...
+                        </p>
+                    </div>
+                    <div class="entry">
+                        <img class="entry-img" src="../images/igor.jpg" alt="entry image">
+                        <div class="entry-content">
+                            <h3 class="title">“Yi Yi”</h3>
+                            <div class="bottom-section">
+                                <div class="rating">★★★★★</div>
+                                <div class="info">
+                                    <p class="category">in Movies Watched</p>
+                                    <p class="date">on Tuesday December 31, 2024</p>
+                                    <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <img class="entry-img" src="../images/yiyi.jpg" alt="entry image">
+                        <div class="entry-content">
+                            <h3 class="title">“Yi Yi”</h3>
+                            <div class="bottom-section">
+                                <div class="rating">★★★★★</div>
+                                <div class="info">
+                                    <p class="category">in Movies Watched</p>
+                                    <p class="date">on Tuesday December 31, 2024</p>
+                                    <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
+    
+        <div class="box-lead" id="box-lead">
+            <h2>My Highlights</h2>
+            <div class="scroll-box">
+                <div class="content-wrapper">
+                    <!-- <div class="entry">
+                        <img class="entry-img" src="../images/yiyi.jpg" alt="entry image">
+                        <div class="entry-content">
+                            <h3 class="title">“Yi Yi”</h3>
+                            <div class="bottom-section">
+                                <div class="rating">★★★★★</div>
+                                <div class="info">
+                                    <p class="category">in Movies Watched</p>
+                                    <p class="date">on Tuesday December 31, 2024</p>
+                                    <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review">
+                            should be a mandatory viewing every 5 years, so much to learn from this.
+                            it’s impossible to see everything this has to offer off a single viewing so it only makes...
+                        </p>
+                    </div>
+                </div> -->
+            </div>
+            <h2>Stats</h2>
+            <div class="box-stats" id="box-stats">
 
-    <div class="body-container">
-        <div class="split right">
-            <div class="centered">
-                <h2>Recent Entries</h2>
             </div>
-        <div class="scroll-box">
-            <div class="content-wrapper">
-                <div class="entry">
-                    <img class="entry-img" src="../images/yiyi.jpg" alt="entry image">
-                    <div class="entry-content">
-                        <h3 class="title">“Yi Yi”</h3>
-                        <div class="bottom-section">
-                            <div class="rating">★★★★★</div>
-                            <div class="info">
-                                <p class="category">in Movies Watched</p>
-                                <p class="date">on Tuesday December 31, 2024</p>
-                                <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="review">
-                        should be a mandatory viewing every 5 years, so much to learn from this. 
-                        it’s impossible to see everything this has to offer off a single viewing so it only makes...
-                    </p>
-                </div>
-                <div class="entry">
-                    <img class="entry-img" src="../images/igor.jpg" alt="entry image">
-                    <div class="entry-content">
-                        <h3 class="title">“Yi Yi”</h3>
-                        <div class="bottom-section">
-                            <div class="rating">★★★★★</div>
-                            <div class="info">  
-                                <p class="category">in Movies Watched</p>
-                                <p class="date">on Tuesday December 31, 2024</p>
-                                <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="entry">
-                    <img class="entry-img" src="../images/yiyi.jpg" alt="entry image">
-                    <div class="entry-content">
-                        <h3 class="title">“Yi Yi”</h3>
-                        <div class="bottom-section">
-                            <div class="rating">★★★★★</div>
-                            <div class="info">
-                                <p class="category">in Movies Watched</p>
-                                <p class="date">on Tuesday December 31, 2024</p>
-                                <p class="tags">*Edward-Yang, *Taiwanese, ...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        </div> <!-- Closing div for box-lead -->
+    </div> <!-- Closing div for box-container -->
+    <script src="homescreen.js"></script>
 </body>
 
 </html>
