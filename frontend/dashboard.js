@@ -1,18 +1,18 @@
 // Sample information to display
 var info = {
-  'ding tea': {'wintermelon milk tea': {rating: 5, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
+  'ding tea': {'wintermelon milk tea': {rating: 2, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
   'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
 };
 
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
-var recent_entries = 0;
+var uploadedImageDataURL = ''; // Image URL to Upload
 
 
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
-const closeModalBtn = document.querySelector('.clinfoose');
+const closeModalBtn = document.querySelector('.close');
 const entryForm = document.getElementById('entryForm');
 const imagePreview = document.querySelector('.image-preview');
 const imageInput = document.getElementById('imageInput');
@@ -20,27 +20,20 @@ const ratingStars = document.querySelectorAll('.rating-star');
 const pullout = document.querySelector('.menu-icon');
 const categoryBox = document.querySelector('.box-category');
 const search = document.querySelector(".category-search")
-
-
+const sortInput = document.querySelector('input[list="sort-options"]');
 
 // --- NEW CODE: Run this when the DOM is ready ---
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('/api/info')
-  .then(response => response.json())
-  .then(data => {
-      window.info = data; // Store the data in the global variable
-    for (const categoryName in info) {
-      populateInitialCategoryNames(categoryName); // Add category names to the list
-    }
-  })
-  .catch(error => console.error('Error fetching data:', error));
+  for (const categoryName in info) {
+    populateInitialCategoryNames(categoryName) // Add category names to the list
+  }
+  openFirstCategory();
 });
 
 // close or pull out category list after clicking menu icon
-pullout.addEventListener('click', () => 
+pullout.addEventListener('click', () =>
   {
     categoryBox.classList.toggle('show');
-
     const boxList = document.querySelector('.box-list');
     if (categoryBox.classList.contains('show')) {
       boxList.style.transition = 'none';
@@ -51,8 +44,6 @@ pullout.addEventListener('click', () =>
     }
   });
 
-
-
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {
   modal.style.display = 'flex';
@@ -61,12 +52,41 @@ entryButton.addEventListener('click', () => {
 // Close/Hide the modal when the close button (×) is clicked
 closeModalBtn.addEventListener('click', () => {
   modal.style.display = 'none';
+  entryForm.reset();
 });
 
 // Close/Hide the modal if the user clicks outside of the modal content
 window.addEventListener('click', (event) => {
   if (event.target === modal) {
     modal.style.display = 'none';
+    entryForm.reset();
+  }
+});
+
+// Sort-by function
+sortInput.addEventListener('input', () => {
+  const sortBy = sortInput.value.toLowerCase();
+
+  if (!currentCategory || !(currentCategory in info)) return;
+
+  const entries = Object.entries(info[currentCategory]);
+
+  // Perform sorting
+  if (sortBy === 'rating(descending)') {
+    entries.sort((a, b) => b[1].rating - a[1].rating); // Descending
+  } if (sortBy === 'rating(ascending)') {
+    entries.sort((a, b) => a[1].rating - b[1].rating); // Ascending
+  } else if (sortBy === 'name(a-z)') {
+    entries.sort((a, b) => a[0].localeCompare(b[0])); // A-Z
+  }else if (sortBy === 'name(z-a)') {
+    entries.sort((a, b) => b[0].localeCompare(a[0])); // Z-A
+  }//dates
+
+  // Clear and display sorted entries
+  const contentBox = document.querySelector('.box-list-content');
+  contentBox.innerHTML = '';
+  for (const [title, data] of entries) {
+    displayItemInfo(title, data.rating, data.review, data.image);
   }
 });
 
@@ -80,8 +100,9 @@ imageInput.addEventListener('change', (event) => {
   if (file) {
     const reader = new FileReader(); // Reads the file
     reader.onload = (e) => {
+      uploadedImageDataURL = e.target.result; // <--- Save the image data
       imagePreview.style.backgroundImage = `url(${e.target.result})`; // Sets the preview image
-      imagePreview.style.backgroundSize = 'cover'; 
+      imagePreview.style.backgroundSize = 'cover';
       imagePreview.style.backgroundPosition = 'center';
     };
     reader.readAsDataURL(file); // Converts the file to a data URL
@@ -99,7 +120,6 @@ ratingStars.forEach((star, index) => {
 });
 
 // Record form submission
-// Record form submission
 entryForm.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevent the form from refreshing the page
 
@@ -116,22 +136,24 @@ entryForm.addEventListener('submit', (event) => {
 
   // Initialize category if it doesn't exist in info
   if (!info[currentCategory]) {
-    info[currentCategory] = {}; 
+    info[currentCategory] = {};
   }
 
   // Add the new entry with its title, rating, and review
   info[currentCategory][title] = {
     rating: rating,
-    review: review
+    review: review,
+    image: uploadedImageDataURL
   };
 
-  console.log('New Entry Added:', { category: currentCategory, title, rating, review });
+  console.log('New Entry Added:', { category: currentCategory, title, rating, review, image: uploadedImageDataURL });
 
   // Clear the form fields
   entryForm.reset();
 
   // Reset image preview
   imagePreview.style.backgroundImage = '';
+  uploadedImageDataURL = '';
 
   // Reset rating stars
   ratingStars.forEach(star => star.classList.remove('active'));
@@ -142,6 +164,25 @@ entryForm.addEventListener('submit', (event) => {
   displayContent(currentCategory);
 });
 
+function openFirstCategory() {
+  const allInputs = document.querySelectorAll('.category-name-btn-input');
+  const firstCategoryName = Object.keys(info)[0];
+
+  if (firstCategoryName in info && allInputs.length > 0) {
+    currentCategory = firstCategoryName;
+
+    // Clear active-category from all buttons first
+    allInputs.forEach(input => input.classList.remove('active-category'));
+
+    // Find the input whose value matches the first category name
+    const firstInput = Array.from(allInputs).find(input => input.value === firstCategoryName);
+    if (firstInput) {
+      firstInput.classList.add('active-category'); // highlight the first one
+    }
+
+    displayContent(currentCategory);
+  }
+}
 
 
 function populateInitialCategoryNames(name) {
@@ -149,10 +190,11 @@ function populateInitialCategoryNames(name) {
   const input = document.createElement("input");
   input.className = "category-name-btn-input";
   input.type = "text";
-  
+ 
   input.value = name;
   input.dataset.originalValue = input.value;
   categoryBox.appendChild(input);
+
 
   // Turn input to button when done editing
   input.onblur = function(){closeCategoryNameInput(input);};
@@ -170,7 +212,7 @@ function addCategoryName(name = "cat") {
     const input = document.createElement("input");
     input.className = "category-name-btn-input";
     input.type = "text";
-    
+   
     // Handle duplicate names at creation time
     let uniqueName = name;
     if(uniqueName in info) {
@@ -180,11 +222,11 @@ function addCategoryName(name = "cat") {
       }
       uniqueName = name + " (" + i + ")";
     }
-    
+   
     input.value = uniqueName;
     info[uniqueName] = {}; // Initialize as empty object
     input.dataset.originalValue = uniqueName; // Store the original value
-    
+   
     categoryBox.appendChild(input);
     input.select();
 
@@ -205,24 +247,12 @@ function selectCategoryNameInput(input) {
   allInputs.forEach(item => {
     item.classList.remove('active-category');
   });
-  
+ 
   // Add active-category class to the clicked input
-  input.classList.add('active-category'); 
+  input.classList.add('active-category');
   currentCategory = input.value;
   displayContent(input.value); // Display the content of the selected category
-  
-}
-
-function displayContent(category) {
-  const contentBox = document.querySelector('.box-list-content');
-  contentBox.textContent = '';
-  // Recieves all content from category
-  for (const item in info[category]) {
-    const { rating, review } = info[category][item];
-
-    displayItemInfo(item,rating,review, image) // Add in picture data!
-  }
-
+ 
 }
 
 function displayContent(category) {
@@ -232,16 +262,28 @@ function displayContent(category) {
   for (const item in info[category]) {
     const { rating, review, image } = info[category][item];
 
-    displayItemInfo(item,rating,review,image) // Add in picture data!
+    displayItemInfo(item,rating,review, image) // Add in picture data!
   }
-
 }
 
 function displayItemInfo(title, rating, review, image) {
   const contentBox = document.querySelector('.box-list-content');
-
   const imageDiv = document.createElement('div');
   imageDiv.className = 'entry-img';
+
+  if (image) {
+    // Normalize the path (replace backslashes with forward slashes)
+    const imagePath = image.replace(/\\/g, '/');
+
+    // Replace grey background with image using background-image
+    imageDiv.style.backgroundImage = `url('${imagePath}')`;
+    imageDiv.style.backgroundSize = 'cover';
+    imageDiv.style.backgroundPosition = 'center';
+    imageDiv.style.backgroundColor = 'transparent'; // Remove the grey
+  }
+
+  const allDiv = document.createElement('div');
+  allDiv.className = 'entry-all';
 
   // Create entry card
   const entryDiv = document.createElement('div');
@@ -281,8 +323,12 @@ function displayItemInfo(title, rating, review, image) {
   infoDiv.appendChild(stars);
   infoDiv.appendChild(reviewEl);
   entryDiv.appendChild(infoDiv);
-  contentBox.appendChild(entryDiv);
+  allDiv.appendChild(entryDiv);
+  allDiv.appendChild(imageDiv);
+
+  contentBox.appendChild(allDiv);
 }
+
 
 function openCategoryNameInput(input) {
   input.readOnly = false;
@@ -294,14 +340,14 @@ function openCategoryNameInput(input) {
 
 function closeCategoryNameInput(input) {
   const originalValue = input.dataset.originalValue;
-  
+ 
   // If the value didn't change, do nothing to the object
   if(input.value === originalValue) {
     input.readOnly = true;
     console.log(info);
     return;
   }
-  
+ 
   // If new value already exists in info (but isn't the current one)
   if(input.value in info) {
     let i = 1;
@@ -310,7 +356,7 @@ function closeCategoryNameInput(input) {
     }
     input.value = input.value + " (" + i + ")";
   }
-  
+ 
   // If original value exists in info, rename the key
   if(originalValue in info) {
     // Save the contents
@@ -323,6 +369,7 @@ function closeCategoryNameInput(input) {
     // This normally shouldn't happen, but add it as a fallback
     info[input.value] = {};
   }
+
 
   input.dataset.originalValue = input.value; // Update the stored value
   input.readOnly = true;

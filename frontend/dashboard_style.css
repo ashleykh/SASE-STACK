@@ -117,7 +117,6 @@ img.top-left-logo {
 
 .box-list-content{
     padding-top: 20px; 
-    max-height: 400px; /* Set a maximum height (adjust as needed) */
     overflow-y: auto;  /* Enable vertical scrolling when content exceeds the max height */
     padding-right: 10px; /* Optional, add some padding for better scrollbar visibility */
     display: flex;
@@ -346,17 +345,26 @@ img.top-left-logo {
 }
 
 .entry-card {
-    max-width: 40vw;
-    min-height: 25vh;
+    display: flex;
+    flex-direction: row;
     background-color: #fff;
     padding: 12px 16px;
     margin-left: 20vw;
     margin-bottom: 14px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: 0.2s ease-in-out;
+    width: 40vw;
+    align-items: flex-start; /* align top of image and text */
 }
-  
-.entry-card:hover {
+
+
+.entry-card > div {
+    margin: 10px;
+    padding: 20px;
+    font-size: 30px; 
+  }
+
+.entry-all:hover {
     transform: scale(1.01);
 }
 
@@ -364,8 +372,9 @@ img.top-left-logo {
 .entry-title {
     font-size: 1.1rem;
     font-weight: bold;
-    margin: 5px 4px;
+    margin: 0.5rem;
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 /* rating stars of the item */
@@ -376,23 +385,40 @@ img.top-left-logo {
   
   /* review text of the item */
 .entry-review {
-    transform: translateY(-4vh); 
-    margin: 0 15vw;
+    width: 24vw;
+    transform: translateX(60%) translateY(-5vh); 
     font-size: 0.95rem;
     color: #444;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 25vw;
 }
 
+
 .entry-img {
-    width: 150px; /* Adjust image width */
-    height: auto;
-    background-color: #ffffff;
-    border-radius: 5px;
-    object-fit: cover; /* Ensures the image is cropped instead of stretched */
+    width: 19vh;  /* Set a fixed width for the image */
+    height: 28vh; /* Set a fixed height for the image */
+    background-color: #888;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: translateX(-53vw);
+    flex-shrink: 0; /* Prevents the image from shrinking */
+    flex-grow: 0; /* Prevents the image from growing */
+    margin-right: 12px; /* Add space between the image and the text */
 }
-  
+
+.entry-info {
+    display: flex;
+    flex-direction: column; /* Arrange the text elements in a column */
+    font-size: 16px;
+    color: #333;
+}
+
+.entry-all {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
 
 .category-scroll-list {
     flex: 1;
