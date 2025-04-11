@@ -6,6 +6,7 @@ var info = {
 
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
+var recent_entries = 0;
 
 
 // Get DOM (Document Object Model) elements

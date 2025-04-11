@@ -37,7 +37,7 @@ function computeStats(info)
 {
     let totalEntries = 0;
     let totalRating = 0;
-    let numCategories = 0;
+    let recentEntries = 0;
 
     const seenCategories = new Set();
 
@@ -53,9 +53,11 @@ function computeStats(info)
 
     const averageRating = totalEntries > 0 ? (totalRating / totalEntries).toFixed(1) : 0;
 
+    // add recent entries here
+
     return {
         total_category: seenCategories.size,
-        recent_creation: totalEntries,
+        recent_creation: recentEntries,
         average_rating: parseFloat(averageRating),
         total_entries: totalEntries
     };
