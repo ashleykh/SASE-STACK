@@ -1,4 +1,8 @@
 // Data structure (info object)
+
+//import { recent } from './dashboard.js';
+let recent = 0
+
 var info = 
 {
     'ding tea': 
@@ -12,27 +16,32 @@ var info =
     }
 };
 
-var best = 
+var highlight = 
 {
-    'bestest': 
-    {
-        'yiyi': { rating: 5, review: 'should be a mandatory viewing every 5 years, so much to learn from this.it’s impossible to see everything this has to offer off a single viewing so it only makes...', image: '../images/yiyi.jpg' }
-    }
+    'best': {}
 };
 
 var stats = 
 {
-    total_category: 0, //get total catagories
-    recent_creation: 0, //get how many items they created
-    average_rating: 0, // get average ratings
-    total_entries: 0 // get how many entries there are
+    totalCategory: 0, //get total catagories
+    recentCreation: 0, //get how many items they created
+    averageRating: 0, // get average ratings
+    totalEntries: 0 // get how many entries there are
 };
 
-function computeStats(info, best) 
+const descriptions = 
+{
+    recent_creation: "new entries this month",
+    total_category: "lists made in lifetime",
+    average_rating: "average rating",
+    total_entries: "total entries made"
+};
+
+function computeStats(info) 
 {
     let totalEntries = 0;
     let totalRating = 0;
-    let numCategories = 0;
+    let recentEntries = recent;
 
     const seenCategories = new Set();
 
@@ -46,38 +55,31 @@ function computeStats(info, best)
         }
     }
 
-    for (const category in best) 
-    {
-        seenCategories.add(category);
-        for (const item in best[category]) 
-        {
-            totalEntries++;
-            totalRating += best[category][item].rating;
-        }
-    }
-
     const averageRating = totalEntries > 0 ? (totalRating / totalEntries).toFixed(1) : 0;
+
+    // add recent entries here
 
     return {
         total_category: seenCategories.size,
-        recent_creation: totalEntries,
+        recent_creation: recentEntries,
         average_rating: parseFloat(averageRating),
         total_entries: totalEntries
     };
 }
 
-
-stats = computeStats(info,best);
-
-
-const descriptions = 
+function gatherHighlights(info, highlight)
 {
-    recent_creation: "new entries this month",
-    total_category: "lists made in lifetime",
-    average_rating: "average rating",
-    total_entries: "total entries made"
-};
-
+    for (const category in info)
+    {
+        for(const item in info[category])
+        {
+            if(info[category][item].rating  >= 4)
+            {
+                highlight.best[item] = info[category][item];
+            }
+        }
+    }
+}
 
 // Function to display an individual item
 function displayItemInfo(title, rating, review, image, contentBox)
@@ -166,9 +168,9 @@ function populateBest()
     // Find the content-wrapper inside box-lead
     const contentBox = document.querySelector('.box-lead .content-wrapper');
 
-    for (const category in best) 
+    for (const category in highlight) 
     {
-        const categoryInfo = best[category];
+        const categoryInfo = highlight[category];
 
         // Loop through the items in the category
         for (const item in categoryInfo) 
@@ -200,6 +202,10 @@ function populateStats()
         statsBox.appendChild(p);
     }
 }
+
+stats = computeStats(info);
+
+gatherHighlights(info, highlight);
 
 populateContent();
 

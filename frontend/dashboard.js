@@ -8,6 +8,7 @@ var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
 var uploadedImageDataURL = ''; // Image URL to Upload
 
+
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
