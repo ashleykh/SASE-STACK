@@ -1,16 +1,12 @@
 // Sample information to display
 var info = {
-  'ding tea': {'wintermelon milk tea': {rating: 5, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
+  'ding tea': {'wintermelon milk tea': {rating: 2, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
   'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
 };
-
 
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
 var uploadedImageDataURL = ''; // Image URL to Upload
-
-
-
 
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
@@ -23,26 +19,20 @@ const ratingStars = document.querySelectorAll('.rating-star');
 const pullout = document.querySelector('.menu-icon');
 const categoryBox = document.querySelector('.box-category');
 const search = document.querySelector(".category-search")
-
-
-
-
-
+const sortInput = document.querySelector('input[list="sort-options"]');
 
 // --- NEW CODE: Run this when the DOM is ready ---
 document.addEventListener('DOMContentLoaded', () => {
   for (const categoryName in info) {
     populateInitialCategoryNames(categoryName) // Add category names to the list
   }
+  openFirstCategory();
 });
-
 
 // close or pull out category list after clicking menu icon
 pullout.addEventListener('click', () =>
   {
     categoryBox.classList.toggle('show');
-
-
     const boxList = document.querySelector('.box-list');
     if (categoryBox.classList.contains('show')) {
       boxList.style.transition = 'none';
@@ -53,23 +43,16 @@ pullout.addEventListener('click', () =>
     }
   });
 
-
-
-
-
-
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {
   modal.style.display = 'flex';
 });
-
 
 // Close/Hide the modal when the close button (×) is clicked
 closeModalBtn.addEventListener('click', () => {
   modal.style.display = 'none';
   entryForm.reset();
 });
-
 
 // Close/Hide the modal if the user clicks outside of the modal content
 window.addEventListener('click', (event) => {
@@ -79,12 +62,37 @@ window.addEventListener('click', (event) => {
   }
 });
 
+// Sort-by function
+sortInput.addEventListener('input', () => {
+  const sortBy = sortInput.value.toLowerCase();
+
+  if (!currentCategory || !(currentCategory in info)) return;
+
+  const entries = Object.entries(info[currentCategory]);
+
+  // Perform sorting
+  if (sortBy === 'rating(descending)') {
+    entries.sort((a, b) => b[1].rating - a[1].rating); // Descending
+  } if (sortBy === 'rating(ascending)') {
+    entries.sort((a, b) => a[1].rating - b[1].rating); // Ascending
+  } else if (sortBy === 'name(a-z)') {
+    entries.sort((a, b) => a[0].localeCompare(b[0])); // A-Z
+  }else if (sortBy === 'name(z-a)') {
+    entries.sort((a, b) => b[0].localeCompare(a[0])); // Z-A
+  }//dates
+
+  // Clear and display sorted entries
+  const contentBox = document.querySelector('.box-list-content');
+  contentBox.innerHTML = '';
+  for (const [title, data] of entries) {
+    displayItemInfo(title, data.rating, data.review, data.image);
+  }
+});
 
 // Upload image
 function openFilePicker() {
   imageInput.click();  // Triggers file input
 }
-
 
 imageInput.addEventListener('change', (event) => {
   const file = event.target.files[0];
@@ -100,9 +108,6 @@ imageInput.addEventListener('change', (event) => {
   }
 });
 
-
-
-
 // Record rating stars
 ratingStars.forEach((star, index) => {
   star.addEventListener('click', () => {
@@ -113,18 +118,14 @@ ratingStars.forEach((star, index) => {
   });
 });
 
-
-// Record form submission
 // Record form submission
 entryForm.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevent the form from refreshing the page
-
 
   // Get form values
   const title = document.getElementById('title').value;
   const review = document.getElementById('review').value;
   const rating = Array.from(ratingStars).filter(star => star.classList.contains('active')).length;
-
 
   // Check if a category is selected
   if (!currentCategory) {
@@ -132,49 +133,55 @@ entryForm.addEventListener('submit', (event) => {
     return;
   }
 
-
   // Initialize category if it doesn't exist in info
   if (!info[currentCategory]) {
     info[currentCategory] = {};
   }
-
 
   // Add the new entry with its title, rating, and review
   info[currentCategory][title] = {
     rating: rating,
     review: review,
     image: uploadedImageDataURL
-
-
   };
-
 
   console.log('New Entry Added:', { category: currentCategory, title, rating, review, image: uploadedImageDataURL });
 
-
   // Clear the form fields
   entryForm.reset();
-
 
   // Reset image preview
   imagePreview.style.backgroundImage = '';
   uploadedImageDataURL = '';
 
-
   // Reset rating stars
   ratingStars.forEach(star => star.classList.remove('active'));
-
 
   // Close the modal
   modal.style.display = 'none';
 
-
   displayContent(currentCategory);
 });
 
+function openFirstCategory() {
+  const allInputs = document.querySelectorAll('.category-name-btn-input');
+  const firstCategoryName = Object.keys(info)[0];
 
+  if (firstCategoryName in info && allInputs.length > 0) {
+    currentCategory = firstCategoryName;
 
+    // Clear active-category from all buttons first
+    allInputs.forEach(input => input.classList.remove('active-category'));
 
+    // Find the input whose value matches the first category name
+    const firstInput = Array.from(allInputs).find(input => input.value === firstCategoryName);
+    if (firstInput) {
+      firstInput.classList.add('active-category'); // highlight the first one
+    }
+
+    displayContent(currentCategory);
+  }
+}
 
 
 function populateInitialCategoryNames(name) {
@@ -199,7 +206,6 @@ function populateInitialCategoryNames(name) {
   };
 }
 
-
 function addCategoryName(name = "cat") {
     const categoryBox = document.getElementById("buttonList");
     const input = document.createElement("input");
@@ -223,7 +229,6 @@ function addCategoryName(name = "cat") {
     categoryBox.appendChild(input);
     input.select();
 
-
     // Turn input to button when done editing
     input.onblur = function(){closeCategoryNameInput(input);};
     input.ondblclick = function(){openCategoryNameInput(input);};
@@ -234,7 +239,6 @@ function addCategoryName(name = "cat") {
       }
     };
 }
-
 
 function selectCategoryNameInput(input) {
   // Remove active-category class from all inputs
@@ -250,9 +254,6 @@ function selectCategoryNameInput(input) {
  
 }
 
-
-
-
 function displayContent(category) {
   const contentBox = document.querySelector('.box-list-content');
   contentBox.textContent = '';
@@ -260,34 +261,18 @@ function displayContent(category) {
   for (const item in info[category]) {
     const { rating, review, image } = info[category][item];
 
-
-
-
     displayItemInfo(item,rating,review, image) // Add in picture data!
   }
 }
 
-
-
-
 function displayItemInfo(title, rating, review, image) {
   const contentBox = document.querySelector('.box-list-content');
-
-
-
-
   const imageDiv = document.createElement('div');
   imageDiv.className = 'entry-img';
-
-
-
 
   if (image) {
     // Normalize the path (replace backslashes with forward slashes)
     const imagePath = image.replace(/\\/g, '/');
-
-
-
 
     // Replace grey background with image using background-image
     imageDiv.style.backgroundImage = `url('${imagePath}')`;
@@ -296,34 +281,21 @@ function displayItemInfo(title, rating, review, image) {
     imageDiv.style.backgroundColor = 'transparent'; // Remove the grey
   }
 
-
-
-
-
-
-
+  const allDiv = document.createElement('div');
+  allDiv.className = 'entry-all';
 
   // Create entry card
   const entryDiv = document.createElement('div');
   entryDiv.className = 'entry-card';
 
-
-
-
   // Info container
   const infoDiv = document.createElement('div');
   infoDiv.className = 'entry-info';
-
-
-
 
   // Title
   const titleEl = document.createElement('h4');
   titleEl.className = 'entry-title';
   titleEl.textContent = title;
-
-
-
 
   // Star rating
   const stars = document.createElement('div');
@@ -340,31 +312,21 @@ function displayItemInfo(title, rating, review, image) {
     stars.appendChild(star);
   }
 
-
-
-
   // Review
   const reviewEl = document.createElement('p');
   reviewEl.className = 'entry-review';
   reviewEl.textContent = review;
-
-
-
 
   // Assemble and append
   infoDiv.appendChild(titleEl);
   infoDiv.appendChild(stars);
   infoDiv.appendChild(reviewEl);
   entryDiv.appendChild(infoDiv);
-  entryDiv.appendChild(imageDiv);
+  allDiv.appendChild(entryDiv);
+  allDiv.appendChild(imageDiv);
 
-
-
-
-  contentBox.appendChild(entryDiv);
+  contentBox.appendChild(allDiv);
 }
-
-
 
 
 function openCategoryNameInput(input) {
@@ -374,7 +336,6 @@ function openCategoryNameInput(input) {
   input.select();
   input.classList.add("active"); // Add active class for styling
 }
-
 
 function closeCategoryNameInput(input) {
   const originalValue = input.dataset.originalValue;
