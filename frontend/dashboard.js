@@ -4,14 +4,18 @@ var info = {
   'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
 };
 
+
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
+var uploadedImageDataURL = ''; // Image URL to Upload
+
+
 
 
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
-const closeModalBtn = document.querySelector('.clinfoose');
+const closeModalBtn = document.querySelector('.close');
 const entryForm = document.getElementById('entryForm');
 const imagePreview = document.querySelector('.image-preview');
 const imageInput = document.getElementById('imageInput');
@@ -22,23 +26,22 @@ const search = document.querySelector(".category-search")
 
 
 
+
+
+
 // --- NEW CODE: Run this when the DOM is ready ---
 document.addEventListener('DOMContentLoaded', () => {
-  fetch('/api/info')
-  .then(response => response.json())
-  .then(data => {
-      window.info = data; // Store the data in the global variable
-    for (const categoryName in info) {
-      populateInitialCategoryNames(categoryName); // Add category names to the list
-    }
-  })
-  .catch(error => console.error('Error fetching data:', error));
+  for (const categoryName in info) {
+    populateInitialCategoryNames(categoryName) // Add category names to the list
+  }
 });
 
+
 // close or pull out category list after clicking menu icon
-pullout.addEventListener('click', () => 
+pullout.addEventListener('click', () =>
   {
     categoryBox.classList.toggle('show');
+
 
     const boxList = document.querySelector('.box-list');
     if (categoryBox.classList.contains('show')) {
@@ -52,15 +55,20 @@ pullout.addEventListener('click', () =>
 
 
 
+
+
+
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {
   modal.style.display = 'flex';
 });
 
+
 // Close/Hide the modal when the close button (×) is clicked
 closeModalBtn.addEventListener('click', () => {
   modal.style.display = 'none';
 });
+
 
 // Close/Hide the modal if the user clicks outside of the modal content
 window.addEventListener('click', (event) => {
@@ -69,23 +77,29 @@ window.addEventListener('click', (event) => {
   }
 });
 
+
 // Upload image
 function openFilePicker() {
   imageInput.click();  // Triggers file input
 }
+
 
 imageInput.addEventListener('change', (event) => {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader(); // Reads the file
     reader.onload = (e) => {
+      uploadedImageDataURL = e.target.result; // <--- Save the image data
       imagePreview.style.backgroundImage = `url(${e.target.result})`; // Sets the preview image
-      imagePreview.style.backgroundSize = 'cover'; 
+      imagePreview.style.backgroundSize = 'cover';
       imagePreview.style.backgroundPosition = 'center';
     };
     reader.readAsDataURL(file); // Converts the file to a data URL
   }
 });
+
+
+
 
 // Record rating stars
 ratingStars.forEach((star, index) => {
@@ -97,15 +111,18 @@ ratingStars.forEach((star, index) => {
   });
 });
 
+
 // Record form submission
 // Record form submission
 entryForm.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevent the form from refreshing the page
 
+
   // Get form values
   const title = document.getElementById('title').value;
   const review = document.getElementById('review').value;
   const rating = Array.from(ratingStars).filter(star => star.classList.contains('active')).length;
+
 
   // Check if a category is selected
   if (!currentCategory) {
@@ -113,33 +130,48 @@ entryForm.addEventListener('submit', (event) => {
     return;
   }
 
+
   // Initialize category if it doesn't exist in info
   if (!info[currentCategory]) {
-    info[currentCategory] = {}; 
+    info[currentCategory] = {};
   }
+
 
   // Add the new entry with its title, rating, and review
   info[currentCategory][title] = {
     rating: rating,
-    review: review
+    review: review,
+    image: uploadedImageDataURL
+
+
   };
 
-  console.log('New Entry Added:', { category: currentCategory, title, rating, review });
+
+  console.log('New Entry Added:', { category: currentCategory, title, rating, review, image: uploadedImageDataURL });
+
 
   // Clear the form fields
   entryForm.reset();
 
+
   // Reset image preview
   imagePreview.style.backgroundImage = '';
+  uploadedImageDataURL = '';
+
 
   // Reset rating stars
   ratingStars.forEach(star => star.classList.remove('active'));
 
+
   // Close the modal
   modal.style.display = 'none';
 
+
   displayContent(currentCategory);
 });
+
+
+
 
 
 
@@ -148,10 +180,11 @@ function populateInitialCategoryNames(name) {
   const input = document.createElement("input");
   input.className = "category-name-btn-input";
   input.type = "text";
-  
+ 
   input.value = name;
   input.dataset.originalValue = input.value;
   categoryBox.appendChild(input);
+
 
   // Turn input to button when done editing
   input.onblur = function(){closeCategoryNameInput(input);};
@@ -164,12 +197,13 @@ function populateInitialCategoryNames(name) {
   };
 }
 
+
 function addCategoryName(name = "cat") {
     const categoryBox = document.getElementById("buttonList");
     const input = document.createElement("input");
     input.className = "category-name-btn-input";
     input.type = "text";
-    
+   
     // Handle duplicate names at creation time
     let uniqueName = name;
     if(uniqueName in info) {
@@ -179,13 +213,14 @@ function addCategoryName(name = "cat") {
       }
       uniqueName = name + " (" + i + ")";
     }
-    
+   
     input.value = uniqueName;
     info[uniqueName] = {}; // Initialize as empty object
     input.dataset.originalValue = uniqueName; // Store the original value
-    
+   
     categoryBox.appendChild(input);
     input.select();
+
 
     // Turn input to button when done editing
     input.onblur = function(){closeCategoryNameInput(input);};
@@ -198,31 +233,23 @@ function addCategoryName(name = "cat") {
     };
 }
 
+
 function selectCategoryNameInput(input) {
   // Remove active-category class from all inputs
   const allInputs = document.querySelectorAll('.category-name-btn-input');
   allInputs.forEach(item => {
     item.classList.remove('active-category');
   });
-  
+ 
   // Add active-category class to the clicked input
-  input.classList.add('active-category'); 
+  input.classList.add('active-category');
   currentCategory = input.value;
   displayContent(input.value); // Display the content of the selected category
-  
+ 
 }
 
-function displayContent(category) {
-  const contentBox = document.querySelector('.box-list-content');
-  contentBox.textContent = '';
-  // Recieves all content from category
-  for (const item in info[category]) {
-    const { rating, review } = info[category][item];
 
-    displayItemInfo(item,rating,review, image) // Add in picture data!
-  }
 
-}
 
 function displayContent(category) {
   const contentBox = document.querySelector('.box-list-content');
@@ -231,29 +258,70 @@ function displayContent(category) {
   for (const item in info[category]) {
     const { rating, review, image } = info[category][item];
 
-    displayItemInfo(item,rating,review,image) // Add in picture data!
-  }
 
+
+
+    displayItemInfo(item,rating,review, image) // Add in picture data!
+  }
 }
+
+
+
 
 function displayItemInfo(title, rating, review, image) {
   const contentBox = document.querySelector('.box-list-content');
 
+
+
+
   const imageDiv = document.createElement('div');
   imageDiv.className = 'entry-img';
+
+
+
+
+  if (image) {
+    // Normalize the path (replace backslashes with forward slashes)
+    const imagePath = image.replace(/\\/g, '/');
+
+
+
+
+    // Replace grey background with image using background-image
+    imageDiv.style.backgroundImage = `url('${imagePath}')`;
+    imageDiv.style.backgroundSize = 'cover';
+    imageDiv.style.backgroundPosition = 'center';
+    imageDiv.style.backgroundColor = 'transparent'; // Remove the grey
+  }
+
+
+
+
+
+
+
 
   // Create entry card
   const entryDiv = document.createElement('div');
   entryDiv.className = 'entry-card';
 
+
+
+
   // Info container
   const infoDiv = document.createElement('div');
   infoDiv.className = 'entry-info';
+
+
+
 
   // Title
   const titleEl = document.createElement('h4');
   titleEl.className = 'entry-title';
   titleEl.textContent = title;
+
+
+
 
   // Star rating
   const stars = document.createElement('div');
@@ -270,18 +338,32 @@ function displayItemInfo(title, rating, review, image) {
     stars.appendChild(star);
   }
 
+
+
+
   // Review
   const reviewEl = document.createElement('p');
   reviewEl.className = 'entry-review';
   reviewEl.textContent = review;
+
+
+
 
   // Assemble and append
   infoDiv.appendChild(titleEl);
   infoDiv.appendChild(stars);
   infoDiv.appendChild(reviewEl);
   entryDiv.appendChild(infoDiv);
+  entryDiv.appendChild(imageDiv);
+
+
+
+
   contentBox.appendChild(entryDiv);
 }
+
+
+
 
 function openCategoryNameInput(input) {
   input.readOnly = false;
@@ -291,16 +373,17 @@ function openCategoryNameInput(input) {
   input.classList.add("active"); // Add active class for styling
 }
 
+
 function closeCategoryNameInput(input) {
   const originalValue = input.dataset.originalValue;
-  
+ 
   // If the value didn't change, do nothing to the object
   if(input.value === originalValue) {
     input.readOnly = true;
     console.log(info);
     return;
   }
-  
+ 
   // If new value already exists in info (but isn't the current one)
   if(input.value in info) {
     let i = 1;
@@ -309,7 +392,7 @@ function closeCategoryNameInput(input) {
     }
     input.value = input.value + " (" + i + ")";
   }
-  
+ 
   // If original value exists in info, rename the key
   if(originalValue in info) {
     // Save the contents
@@ -322,6 +405,7 @@ function closeCategoryNameInput(input) {
     // This normally shouldn't happen, but add it as a fallback
     info[input.value] = {};
   }
+
 
   input.dataset.originalValue = input.value; // Update the stored value
   input.readOnly = true;
