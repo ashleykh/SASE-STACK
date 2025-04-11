@@ -1,4 +1,8 @@
 // Data structure (info object)
+
+//import { recent } from './dashboard.js';
+let recent = 0
+
 var info = 
 {
     'ding tea': 
@@ -37,7 +41,7 @@ function computeStats(info)
 {
     let totalEntries = 0;
     let totalRating = 0;
-    let recentEntries = 0;
+    let recentEntries = recent;
 
     const seenCategories = new Set();
 
@@ -67,7 +71,7 @@ function gatherHighlights(info, highlight)
 {
     for (const category in info)
     {
-        for(item in info[category])
+        for(const item in info[category])
         {
             if(info[category][item].rating  >= 4)
             {
