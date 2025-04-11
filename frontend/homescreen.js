@@ -14,21 +14,26 @@ var info =
 
 var best = 
 {
-    'bestest': 
-    {
-        'yiyi': { rating: 5, review: 'should be a mandatory viewing every 5 years, so much to learn from this.it’s impossible to see everything this has to offer off a single viewing so it only makes...', image: '../images/yiyi.jpg' }
-    }
+    'bestest': {}
 };
 
 var stats = 
 {
-    total_category: 0, //get total catagories
-    recent_creation: 0, //get how many items they created
-    average_rating: 0, // get average ratings
-    total_entries: 0 // get how many entries there are
+    totalCategory: 0, //get total catagories
+    recentCreation: 0, //get how many items they created
+    averageRating: 0, // get average ratings
+    totalEntries: 0 // get how many entries there are
 };
 
-function computeStats(info, best) 
+const descriptions = 
+{
+    recent_creation: "new entries this month",
+    total_category: "lists made in lifetime",
+    average_rating: "average rating",
+    total_entries: "total entries made"
+};
+
+function computeStats(info) 
 {
     let totalEntries = 0;
     let totalRating = 0;
@@ -46,16 +51,6 @@ function computeStats(info, best)
         }
     }
 
-    for (const category in best) 
-    {
-        seenCategories.add(category);
-        for (const item in best[category]) 
-        {
-            totalEntries++;
-            totalRating += best[category][item].rating;
-        }
-    }
-
     const averageRating = totalEntries > 0 ? (totalRating / totalEntries).toFixed(1) : 0;
 
     return {
@@ -66,18 +61,19 @@ function computeStats(info, best)
     };
 }
 
-
-stats = computeStats(info,best);
-
-
-const descriptions = 
+function gatherHighlights(info, best)
 {
-    recent_creation: "new entries this month",
-    total_category: "lists made in lifetime",
-    average_rating: "average rating",
-    total_entries: "total entries made"
-};
-
+    for (const category in info)
+    {
+        for(item in info[category])
+        {
+            if(info[category][item].rating  >= 4)
+            {
+                best.bestest[item] = info[category][item];
+            }
+        }
+    }
+}
 
 // Function to display an individual item
 function displayItemInfo(title, rating, review, image, contentBox)
@@ -200,6 +196,10 @@ function populateStats()
         statsBox.appendChild(p);
     }
 }
+
+stats = computeStats(info);
+
+gatherHighlights(info, best);
 
 populateContent();
 
