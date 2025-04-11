@@ -12,9 +12,9 @@ var info =
     }
 };
 
-var best = 
+var highlight = 
 {
-    'bestest': {}
+    'best': {}
 };
 
 var stats = 
@@ -61,7 +61,7 @@ function computeStats(info)
     };
 }
 
-function gatherHighlights(info, best)
+function gatherHighlights(info, highlight)
 {
     for (const category in info)
     {
@@ -69,7 +69,7 @@ function gatherHighlights(info, best)
         {
             if(info[category][item].rating  >= 4)
             {
-                best.bestest[item] = info[category][item];
+                highlight.best[item] = info[category][item];
             }
         }
     }
@@ -162,9 +162,9 @@ function populateBest()
     // Find the content-wrapper inside box-lead
     const contentBox = document.querySelector('.box-lead .content-wrapper');
 
-    for (const category in best) 
+    for (const category in highlight) 
     {
-        const categoryInfo = best[category];
+        const categoryInfo = highlight[category];
 
         // Loop through the items in the category
         for (const item in categoryInfo) 
@@ -199,7 +199,7 @@ function populateStats()
 
 stats = computeStats(info);
 
-gatherHighlights(info, best);
+gatherHighlights(info, highlight);
 
 populateContent();
 
