@@ -67,6 +67,7 @@ entryButton.addEventListener('click', () => {
 // Close/Hide the modal when the close button (×) is clicked
 closeModalBtn.addEventListener('click', () => {
   modal.style.display = 'none';
+  entryForm.reset();
 });
 
 
