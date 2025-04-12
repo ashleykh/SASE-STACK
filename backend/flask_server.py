@@ -88,7 +88,7 @@ def login():
         return jsonify({'status': 'error', 'message': 'Invalid password'}), 400
 
     session.close()
-    return jsonify({'status': 'success', 'message': 'Login successful'})
+    return jsonify({'status': 'success', 'message': 'Login successful', 'id': user.id})
 
 @app.route('/add-category',methods=['POST'])
 def add_category():
@@ -163,12 +163,11 @@ def get_item_list(category_id):
 
         if(not result):
             return (None)
-        
-        # item_list = {}
-        item_list = []
+
+        item_list = {}
         for item in result:
-            item_list.append({'title': item.title, 'rating': item.rating, 'review': item.review, 'image': item.image})
-            # item_list[item.id] = {'title': item.title, 'rating': item.rating, 'review': item.review, 'image': item.image}
+            item_list[item.title] = {'rating': item.rating, 'review': item.review, 'image': item.image}
+            # item_list.append({'title': item.title, 'rating': item.rating, 'review': item.review, 'image': item.image})
         
         return item_list
     else:
@@ -217,13 +216,14 @@ def get_user_info():
         return jsonify({'status': 'error', 'message': 'Invalid user'}), 400
 
     category_list = get_category_list(user_id)
+    item_list = get_item_list(1)
 
-    info = []
+    info = {}
 
     for category_id in category_list:
         item_list = get_item_list(category_id)
         category_name = category_list[category_id]
-        info.append({category_name: item_list})
+        info[category_name] = item_list
         
     return jsonify({'status': 'success', 'info': info})
 
