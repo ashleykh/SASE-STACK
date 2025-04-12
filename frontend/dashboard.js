@@ -32,6 +32,33 @@ document.addEventListener('DOMContentLoaded', () => {
   openFirstCategory();
 });
 
+//Search Bar
+search.addEventListener('input', () => {
+  const searchInput = search.value.toLowerCase();
+
+  const entries = Object.entries(info[currentCategory]);
+
+  //Gives filtered entries
+  const filtered = entries.filter(([title, _data]) => {
+    return title.toLowerCase().includes(searchInput);
+  });
+
+  //Reset display
+  const contentBox = document.querySelector('.box-list-content');
+  contentBox.innerHTML = '';
+
+  if (filtered.length == 0) {
+    const none = document.createElement('p');
+    none.textContent ="No Results Found ☹";
+    contentBox.appendChild(none);
+  }
+
+  //Display only filtered content
+  for (const [title, data] of filtered) {
+    displayItemInfo(title, data.rating, data.review, data.image);
+  }
+});
+
 // close or pull out category list after clicking menu icon
 pullout.addEventListener('click', () =>
   {
