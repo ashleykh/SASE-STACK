@@ -65,10 +65,10 @@ pullout.addEventListener('click', () =>
     categoryBox.classList.toggle('show');
     const boxList = document.querySelector('.box-list');
     if (categoryBox.classList.contains('show')) {
-      boxList.style.transition = 'none';
+      //boxList.style.transition = 'none';
       boxList.style.width = '100%';
     } else {
-      boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect
+      //boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect
       boxList.style.width = '70%'; // Reset to original width
     }
     

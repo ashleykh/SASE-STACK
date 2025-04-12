@@ -99,7 +99,8 @@ img.top-left-logo {
     background: #e9edf2;
     /*border: 2px solid red; /* Creates the box border */
     /* Add transition to match the sidebar */
-    transition: auto 0.7s ease-in-out, width 0.7s ease-in-out;
+    transition: width 0.7s ease-in-out;
+    overflow: hidden;
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
@@ -108,6 +109,8 @@ img.top-left-logo {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding-left: 2vh;
+    padding-right: 2vh;
     width: 100%;
     height: 15%;
     border: 2px solid black; /* Creates the box border */
@@ -121,6 +124,7 @@ img.top-left-logo {
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
     width: 100%;
     height: 90%;
     border: 2px solid black; /* Creates the box border */
@@ -139,7 +143,8 @@ img.top-left-logo {
     border-left: 3px solid black;
     border-right: 1px solid black;
     border-bottom: 2px solid black;
-    transition: left 0.7s ease-in-out;
+    transition: width 0.7s ease-in-out;
+    overflow: hidden;
     padding: 0;
 }
 
