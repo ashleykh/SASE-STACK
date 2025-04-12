@@ -186,12 +186,14 @@ img.top-left-logo {
     white-space: nowrap; /* Prevent text from wrapping */
 }
 
-.sort-container input[list="sort-options"] {
+.sort-options {
+    width: 18vw;
     padding: 8px 15px;
     border-radius: 20px;
     border: 1px solid #ccc; /* Add a border for input */
     background-color: #e0e0e0; /* Slightly darker grey for the input */
     white-space: nowrap; /* Prevent text from wrapping */
+    transition: all 0.7s ease-in-out;
 }
 
 .sort-container datalist {
@@ -357,8 +359,14 @@ img.top-left-logo {
     transition: 0.2s ease-in-out;
     width: 40vw;
     align-items: flex-start; /* align top of image and text */
+    transition: all 0.7s ease-in-out;
 }
 
+
+.box-container.sidebar-closed .entry-card {
+    transform: translateX(0vw); /* Adjust this as needed */
+    width: 60vw;
+}
 
 .entry-card > div {
     margin: 10px;
@@ -388,11 +396,16 @@ img.top-left-logo {
   /* review text of the item */
 .entry-review {
     width: 24vw;
-    transform: translateX(60%) translateY(-5vh); 
+    transform: translateX(55%) translateY(-6vh); 
     font-size: 0.95rem;
     color: #444;
     overflow: hidden;
     text-overflow: ellipsis;
+    transition: all 0.7s ease-in-out;
+}
+.box-container.sidebar-closed .entry-review {
+    width: 40vw;
+    transform: translateX(35%) translateY(-6vh); 
 }
 
 
@@ -407,6 +420,10 @@ img.top-left-logo {
     flex-shrink: 0; /* Prevents the image from shrinking */
     flex-grow: 0; /* Prevents the image from growing */
     margin-right: 12px; /* Add space between the image and the text */
+    transition: all 0.7s ease-in-out; 
+}
+.box-container.sidebar-closed .entry-img {
+    transform: translateX(-73vw); /* Remove the huge negative offset */
 }
 
 .entry-info {
