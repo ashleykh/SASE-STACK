@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateInitialCategoryNames(categoryName) // Add category names to the list
   }
   openFirstCategory();
+
 });
 
 //Search Bar
@@ -448,6 +449,9 @@ function openCategoryNameInput(input) {
 }
 
 function closeCategoryNameInput(input) {
+  //getInfo
+  getInfo(1)
+
   const originalValue = input.dataset.originalValue;
  
   // If the value didn't change, do nothing to the object
@@ -483,4 +487,25 @@ function closeCategoryNameInput(input) {
   input.dataset.originalValue = input.value; // Update the stored value
   input.readOnly = true;
   console.log(info);
+}
+
+function getInfo(user_id) {
+  fetch('http://127.0.0.1:5000/user-info', {
+    method: 'GET',
+    headers: {
+        'userid': user_id
+    }
+  })
+  .then(response => response.json())
+  .then(result => {
+      if (result.status === 'success') {
+          console.log(result.info)
+          console.log(info)
+      } else {
+          console.log('Error:', result.message);
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
 }
