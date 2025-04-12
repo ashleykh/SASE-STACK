@@ -154,6 +154,7 @@ def get_category_list(user_id):
                 category_list[category.id] = category.name
             return category_list
     else:
+        session.close()
         return(None)
 
 def get_item_list(category_id):
@@ -162,7 +163,7 @@ def get_item_list(category_id):
 
     if(category):
         result = session.query(Item).filter_by(category_id=category_id).all()
-
+        session.close()
         if(not result):
             return (None)
 
@@ -173,6 +174,7 @@ def get_item_list(category_id):
         
         return item_list
     else:
+        session.close()
         return(None)
 
 @app.route('/add-item',methods=['POST'])
@@ -217,6 +219,7 @@ def get_user_info():
         session.close()
         return jsonify({'status': 'error', 'message': 'Invalid user'}), 400
 
+    session.close()
     category_list = get_category_list(user_id)
 
     info = {}
