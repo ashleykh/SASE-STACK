@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   info = await getInfo(localStorage.getItem('userid'))
 
-  console.log('hello world')
   console.log(info)
 
   for (const categoryName in info) {
@@ -255,6 +254,8 @@ function addCategoryName(name = "cat") {
     info[uniqueName] = {}; // Initialize as empty object
     input.dataset.originalValue = uniqueName; // Store the original value
    
+    addCategoryToDatabase(localStorage.getItem('userid'), uniqueName)
+
     categoryBox.appendChild(input);
     input.select();
 
@@ -453,10 +454,6 @@ async function getInfo(user_id) {
     const result = await response.json()
   
     if (result.status === 'success') {
-      // info = result.info
-      // console.log(info)
-      // console.log(result.info)
-
       return result.info
     } else {
         console.log('Error:', result.message);
@@ -465,4 +462,29 @@ async function getInfo(user_id) {
   } catch(error) {
       console.error('Error:', error);
   };
+}
+
+function addCategoryToDatabase(user_id, category_name) {
+
+  fetch('http://127.0.0.1:5000/add-category', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('category added')
+    } else {
+      console.log('error category not added')
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
 }
