@@ -396,7 +396,7 @@ img.top-left-logo {
   /* review text of the item */
 .entry-review {
     width: 24vw;
-    transform: translateX(55%) translateY(-6vh); 
+    transform: translateX(60%) translateY(-6vh); 
     font-size: 0.95rem;
     color: #444;
     overflow: hidden;

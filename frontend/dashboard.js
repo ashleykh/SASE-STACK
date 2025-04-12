@@ -71,7 +71,7 @@ pullout.addEventListener('click', () => {
     boxContainer.classList.add('sidebar-closed');
   } else {
     // Sidebar is closed
-    boxList.style.transition = ''; // Add transition effect
+    boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect
     boxList.style.width = '70%';
     boxContainer.classList.remove('sidebar-closed');
   }
