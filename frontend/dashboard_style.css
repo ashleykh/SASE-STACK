@@ -130,7 +130,7 @@ img.top-left-logo {
 
 /* small block that holds category list */
 .box-category{
-    box-sizing:border-box; /*makes padding part of the box's dimensions*/
+    box-sizing: border-box; /*makes padding part of the box's dimensions*/
     flex-direction: column;
     display: flex;
     width: 30%;
@@ -345,6 +345,7 @@ img.top-left-logo {
 }
 
 .entry-card {
+    position: relative;
     display: flex;
     flex-direction: row;
     background-color: #fff;
@@ -494,4 +495,20 @@ img.top-left-logo {
 
 .category-name-btn-input.active-category {
     background-color: lightblue;
+  }
+
+  .trash-icon {
+    position: absolute;
+    margin-right: 1vh;
+    margin-top: 1vh;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .trash-icon:hover {
+    transform: scale(1.2);
   }
