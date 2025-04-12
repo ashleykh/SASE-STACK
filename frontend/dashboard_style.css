@@ -503,17 +503,18 @@ img.top-left-logo {
     background-color: lightblue;
   }
 
-  .trash-icon {
-    position: absolute;
-    margin-right: 1vh;
-    margin-top: 1vh;
-    top: 6px;
-    right: 6px;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
+.trash-icon {
+position: absolute;
+margin-right: 1vh;
+margin-top: 1vh;
+top: 6px;
+right: 6px;
+width: 24px;
+height: 24px;
+cursor: pointer;
+transition: transform 0.2s ease;
+}
 
-  .trash-icon:hover {
-    transform: scale(1.2);
+.trash-icon:hover {
+transform: scale(1.2);
+}
