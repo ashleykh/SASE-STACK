@@ -32,14 +32,13 @@
                     <input class="category-search" type="text" placeholder="Search..">
                     <div class="sort-container">
                         <span class="sort-by">Sort by</span>
-                        <input list="sort-options" name="sort">
-                        <datalist id="sort-options">
-                            <option value="Rating(Descending)">
-                            <option value="Rating(Ascending)">
-                            <option value="Date">
-                            <option value="Name(A-Z)">
-                            <option value="Name(Z-A)">
-                        </datalist>
+                        <select class="sort-options" id="sortBy">
+                            <option value="default"></option>
+                            <option value="rating-desc">Rating (Descending)</option>
+                            <option value="rating-asc">Rating (Ascending)</option>
+                            <option value="name(a-z)">Name (A-Z)</option>
+                            <option value="name(z-a)">Name (Z-A)</option>
+                        </select>
                     </div>
                 </div>
                 <div class="box-list-content" id="entryContainer">
