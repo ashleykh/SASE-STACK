@@ -131,7 +131,9 @@ def get_category_list():
         if(result):
             for category in result:
                 category_list[category.id] = category.name
-            return jsonify({'status': 'success', 'category_list': category_list})
+            
+            if(len(category_list) > 0):
+                return jsonify({'status': 'success', 'category_list': category_list})
         
         return jsonify({'status': 'error', 'message': 'No categories'}), 400
     else:
@@ -216,16 +218,18 @@ def get_user_info():
         return jsonify({'status': 'error', 'message': 'Invalid user'}), 400
 
     category_list = get_category_list(user_id)
-    item_list = get_item_list(1)
 
     info = {}
 
-    for category_id in category_list:
-        item_list = get_item_list(category_id)
-        category_name = category_list[category_id]
-        info[category_name] = item_list
+    if(category_list):
+        for category_id in category_list:
+            item_list = get_item_list(category_id)
+            category_name = category_list[category_id]
+            info[category_name] = item_list
         
-    return jsonify({'status': 'success', 'info': info})
+        return jsonify({'status': 'success', 'info': info})
+    else:
+        return jsonify({'status': 'error', 'message': 'No categories'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,8 +1,12 @@
 // Sample information to display
-var info = {
-  'ding tea': {'wintermelon milk tea': {rating: 2, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
-  'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
-};
+// var info = {
+//   'ding tea': {'wintermelon milk tea': {rating: 2, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
+//   'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
+// };
+
+// var info = getInfo(localStorage.getItem('userid'))
+
+var info = {}
 
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
@@ -24,8 +28,15 @@ const sortInput = document.getElementById('sortBy');
 const entryCard = document.querySelector('.box-list-content');
 
 // --- NEW CODE: Run this when the DOM is ready ---
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+  info = await getInfo(localStorage.getItem('userid'))
+
+  console.log('hello world')
+  console.log(info)
+
   for (const categoryName in info) {
+    console.log(categoryName)
     populateInitialCategoryNames(categoryName) // Add category names to the list
   }
   openFirstCategory();
@@ -449,8 +460,6 @@ function openCategoryNameInput(input) {
 }
 
 function closeCategoryNameInput(input) {
-  //getInfo
-  getInfo(1)
 
   const originalValue = input.dataset.originalValue;
  
@@ -489,23 +498,28 @@ function closeCategoryNameInput(input) {
   console.log(info);
 }
 
-function getInfo(user_id) {
-  fetch('http://127.0.0.1:5000/user-info', {
-    method: 'GET',
-    headers: {
-        'userid': user_id
-    }
-  })
-  .then(response => response.json())
-  .then(result => {
-      if (result.status === 'success') {
-          console.log(result.info)
-          console.log(info)
-      } else {
-          console.log('Error:', result.message);
+async function getInfo(user_id) {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/user-info', {
+      method: 'GET',
+      headers: {
+          'userid': user_id
       }
-  })
-  .catch(error => {
+    });
+  
+    const result = await response.json()
+  
+    if (result.status === 'success') {
+      // info = result.info
+      // console.log(info)
+      // console.log(result.info)
+
+      return result.info
+    } else {
+        console.log('Error:', result.message);
+    }
+
+  } catch(error) {
       console.error('Error:', error);
-  });
+  };
 }
