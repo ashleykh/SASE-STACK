@@ -305,6 +305,23 @@ function displayItemInfo(title, rating, review, image) {
   const entryDiv = document.createElement('div');
   entryDiv.className = 'entry-card';
 
+  // Trash icon on entry card
+  const trashIcon = document.createElement('img');
+  trashIcon.src = '/images/trash_icon.png';
+  trashIcon.className = 'trash-icon';
+  trashIcon.title = 'Delete Entry'
+  // Allow the trash icon to be clicked to delete the card
+  trashIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if(confirm(`Are you sure you want to delete "${title}"?`)) {
+      delete info[currentCategory][title]; // Remove from data
+      allDiv.remove(); // Remove from DOM
+    }
+  });
+
+  // Append trash icon to entry div
+  entryDiv.appendChild(trashIcon);
+
   // Info container
   const infoDiv = document.createElement('div');
   infoDiv.className = 'entry-info';
