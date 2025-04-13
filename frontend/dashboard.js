@@ -290,6 +290,30 @@ function addCategoryName(name = "enter category name") {
     };
 }
 
+function deleteCategoryName() {
+  if (!currentCategory) {
+    const contentBox = document.querySelector('.box-list-content');
+    contentBox.innerHTML = ''; // Clear the display
+    alert('Please select a category to Delete!');
+    return;
+  }
+
+  const deleteIcon = document.querySelectorAll('.category-name-btn-input');
+  deleteIcon.forEach(input => {
+    if (input.classList.contains('active-category')) {
+      const categoryName = input.value;
+      if (confirm(`Are you sure you want to delete "${categoryName}"?`)) {
+        delete info[categoryName]; // Remove from data
+        input.remove(); // Remove from DOM
+        currentCategory = null; // Reset current category
+        displayContent(currentCategory); // Clear display
+      }
+    }
+  });
+}
+
+
+
 function selectCategoryNameInput(input) {
   // Remove active-category class from all inputs
   const allInputs = document.querySelectorAll('.category-name-btn-input');
