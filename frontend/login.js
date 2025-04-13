@@ -2,12 +2,18 @@ var form = null;
 var emailInput = null;
 var passwordInput = null;
 
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
+//     form = document.getElementById('login-form');
+//     emailInput = form.querySelector('input[name="email"]');
+//     passwordInput = form.querySelector('input[name="password"]');
+//     login();
+// });
+
+window.onload = function() {
     form = document.getElementById('login-form');
     emailInput = form.querySelector('input[name="email"]');
     passwordInput = form.querySelector('input[name="password"]');
-    login();
-});
+}
 
 function login(){
     form.addEventListener('submit', function(e) {

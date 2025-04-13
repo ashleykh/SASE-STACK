@@ -1,3 +1,7 @@
+window.onload = function() {
+    localStorage.clear('userid')
+}
+
 const form = document.getElementById('signup-form');
 
 form.addEventListener('submit', function(e) {
@@ -16,6 +20,7 @@ form.addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(result => {
         if (result.status === 'success') {
+            localStorage.setItem('userid', result.id);
             window.location.href = 'home.html';
         } else {
             console.log('Error:', result.message);
