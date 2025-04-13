@@ -28,7 +28,9 @@ const sortInput = document.getElementById('sortBy');
 const entryCard = document.querySelector('.box-list-content');
 
 window.onload = async function() {
-  info = await getInfo(localStorage.getItem('userid'))
+  // info = await getInfo(localStorage.getItem('userid'))
+  userid = localStorage.getItem('userid')
+  info = await getInfo(userid)
 
   console.log("hehe",await getInfo(localStorage.getItem('userid')))
   console.log("asd",info)
@@ -588,7 +590,7 @@ function addItemToDatabase(user_id, category_name, title, rating, review, image)
     if (result.status === 'success') {
       console.log('item added')
     } else {
-      console.log('error item not added')
+      console.log(result.message)
     }
   })
   .catch(error=>{

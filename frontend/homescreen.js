@@ -19,7 +19,8 @@ let recent = 0
 var info = {};
 
 window.onload = async function() {
-    info = await getInfo(localStorage.getItem('userid'))
+    userid = localStorage.getItem('userid')
+    info = await getInfo(userid)
     console.log(info)
 };
 
