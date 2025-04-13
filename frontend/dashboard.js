@@ -30,13 +30,17 @@ const entryCard = document.querySelector('.box-list-content');
 window.onload = async function() {
   info = await getInfo(localStorage.getItem('userid'))
 
-  console.log(info)
+  console.log("hehe",await getInfo(localStorage.getItem('userid')))
+  console.log("asd",info)
 
-  for (const categoryName in info) {
-    console.log(categoryName)
-    populateInitialCategoryNames(categoryName) // Add category names to the list
+  if(info) {
+    for (const categoryName in info) {
+      console.log(categoryName)
+      populateInitialCategoryNames(categoryName) // Add category names to the list
+    }
+    openFirstCategory();
   }
-  openFirstCategory();
+
 }
 
 // --- NEW CODE: Run this when the DOM is ready ---
