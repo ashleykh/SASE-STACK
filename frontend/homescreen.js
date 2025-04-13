@@ -3,18 +3,47 @@
 //import { recent } from './dashboard.js';
 let recent = 0
 
-var info = 
-{
-    'ding tea': 
-    {
-        'wintermelon milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' },
-        'peach oolong tea': { rating: 4, review: 'good', image: '../images/yiyi.jpg' }
-    },
-    'boba tea': 
-    {
-        'mango milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' }
-    }
+// var info = 
+// {
+//     'ding tea': 
+//     {
+//         'wintermelon milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' },
+//         'peach oolong tea': { rating: 4, review: 'good', image: '../images/yiyi.jpg' }
+//     },
+//     'boba tea': 
+//     {
+//         'mango milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' }
+//     }
+// };
+
+var info = {};
+
+window.onload = async function() {
+    info = await getInfo(localStorage.getItem('userid'))
+    console.log(info)
 };
+
+async function getInfo(user_id) {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/user-info', {
+        method: 'GET',
+        headers: {
+            'userid': user_id
+        }
+      });
+    
+      const result = await response.json()
+    
+      if (result.status === 'success') {
+        return result.info
+      } else {
+          console.log('Error:', result.message);
+      }
+  
+    } catch(error) {
+        console.error('Error:', error);
+    };
+}
 
 var highlight = 
 {
