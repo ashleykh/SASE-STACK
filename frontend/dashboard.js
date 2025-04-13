@@ -226,6 +226,11 @@ entryForm.addEventListener('submit', (event) => {
     delete info[currentCategory][editingEntryTitle];
   }
 
+  //deal with duplicates
+  // if(info[currentCategory][title]) {
+  //   title = (title,",,")
+  // }
+
   // Add the new entry with its title, rating, and review
   info[currentCategory][title] = {
     rating: rating,
@@ -427,6 +432,9 @@ function displayItemInfo(title, rating, review, image) { //dashboard.js
   trashIcon.addEventListener('click', (e) => {
     e.stopPropagation();
     if(confirm(`Are you sure you want to delete "${title}"?`)) {
+      //need userid, category_name, title, rating, review, image
+      userid = localStorage.getItem('userid')
+      deleteItemToDatabase(userid,currentCategory,title,rating,review,image)
       delete info[currentCategory][title]; // Remove from data
       allDiv.remove(); // Remove from DOM
     }
@@ -644,6 +652,35 @@ function editItemToDatabase(user_id, category_name, old_title, title, rating, re
   .then(result => {
     if (result.status === 'success') {
       console.log('item editted')
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function deleteItemToDatabase(user_id, category_name, title, rating, review, image) {
+
+  fetch('http://127.0.0.1:5000/delete-item', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name,
+      'title': title,
+      'rating': rating,
+      'review': review,
+      'image': image
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('item deleted')
     } else {
       console.log(result.message)
     }
