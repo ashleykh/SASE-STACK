@@ -256,7 +256,7 @@ function populateInitialCategoryNames(name) {
   };
 }
 
-function addCategoryName(name = "cat") {
+function addCategoryName(name = "enter category name") {
     const categoryBox = document.getElementById("buttonList");
     const input = document.createElement("input");
     input.className = "category-name-btn-input";
@@ -315,7 +315,7 @@ function displayContent(category) {
   }
 }
 
-function displayItemInfo(title, rating, review, image) {
+function displayItemInfo(title, rating, review, image) { //dashboard.js
   const contentBox = document.querySelector('.box-list-content');
   const imageDiv = document.createElement('div');
   imageDiv.className = 'entry-img';

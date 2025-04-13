@@ -81,64 +81,73 @@ function gatherHighlights(info, highlight)
     }
 }
 
-// Function to display an individual item
-function displayItemInfo(title, rating, review, image, contentBox)
-{
+function displayItemInfo(title, rating, review, image, contentBox) {
     // Create the entry div (wrapper for the whole item)
     const entryDiv = document.createElement('div');
     entryDiv.className = 'entry';
 
-    // Create image element (if no image, set default)
-    const entryImg = document.createElement('img');
-    entryImg.className = 'entry-img';
-    if (image) 
-    {
-        entryImg.src = image;
-        entryImg.alt = title; // Set alt text to the title if image exists
-    } 
-    else 
-    {
-        entryImg.src = ''; // No image case, it can display a placeholder or nothing
-        entryImg.alt = 'No image available'; // Optional: alternative text for accessibility
+    entryDiv.style.marginBottom = '15px'; // Space between entries
+    entryDiv.style.borderBottom = '1px #e0e0e0'; // Optional divider line
+    entryDiv.style.paddingBottom = '15px'; // Space before the divider
+    entryDiv.style.marginRight = '10px'; // Add right margin to separate from scrollbar
+  
+    // Create image div
+    const imageDiv = document.createElement('div');
+    imageDiv.className = 'entry-img';
+  
+    if (image) {
+      // Normalize the path (replace backslashes with forward slashes)
+      const imagePath = image.replace(/\\/g, '/');
+  
+      // Set background image
+      imageDiv.style.backgroundImage = `url('${imagePath}')`;
+      imageDiv.style.backgroundSize = 'cover';
+      imageDiv.style.backgroundPosition = 'center';
+      imageDiv.style.backgroundColor = 'transparent';
+      imageDiv.style.width = '150px';
+      imageDiv.style.height = '200px';
     }
-
+  
     // Create the content wrapper
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'entry-content';
-
+  
     // Title
     const titleEl = document.createElement('h3');
     titleEl.className = 'title';
     titleEl.textContent = title;
-
-    // Rating
-    const ratingEl = document.createElement('div');
-    ratingEl.className = 'rating';
-    ratingEl.textContent = '★★★★★'.slice(0, rating); // Display stars according to rating
-
-    // Info section
-    const infoDiv = document.createElement('div');
-    infoDiv.className = 'info';
-
+  
+    // Star rating
+    const stars = document.createElement('div');
+    stars.className = 'rating';
+    for (let i = 0; i < 5; i++) {
+      const star = document.createElement('span');
+      star.textContent = '★';
+      if (i < rating) {
+        star.style.color = '#3498db'; // Highlighted star
+      } else {
+        star.style.color = '#ccc'; // Unhighlighted star
+      }
+      stars.appendChild(star);
+    }
+  
+    // Review
     const reviewEl = document.createElement('p');
     reviewEl.className = 'review';
     reviewEl.textContent = review;
-
-    // Append rating and review to the info section
-    infoDiv.appendChild(ratingEl);
-    infoDiv.appendChild(reviewEl);
-
-    // Append title and info to the content wrapper
+  
+    // Append components to the content wrapper
     contentWrapper.appendChild(titleEl);
-    contentWrapper.appendChild(infoDiv);
-
+    contentWrapper.appendChild(stars);
+    contentWrapper.appendChild(reviewEl);
+  
     // Append the image and content to the entry div
-    entryDiv.appendChild(entryImg);
+    entryDiv.appendChild(imageDiv);
     entryDiv.appendChild(contentWrapper);
-
+  
     // Add the entry div to the passed contentBox
     contentBox.appendChild(entryDiv);
-}
+  }
 
 
 // Function to populate the content dynamically for 'info'

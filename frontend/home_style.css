@@ -34,7 +34,7 @@ button:hover {
     justify-content: space-between; /* Ensures items are spaced out */
     width: 100%;
     height: 10vh;
-    border: 2px solid green; /* Creates the box border */
+    border-bottom: 2.5px solid black; /* Creates the box border */
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
@@ -51,6 +51,7 @@ button:hover {
     color: white;
     cursor: pointer;
     margin-left: 1vh;
+    display: none;
 }
 
 /* dashboard button in navbar */
@@ -77,6 +78,7 @@ button:hover {
 
 /* sase logo */
 img.top-left-logo { 
+    margin-left: 10.5vh;
     height: 7vh;
     cursor: pointer;
 }
@@ -85,7 +87,7 @@ img.top-left-logo {
     height: 90vh;
     display: flex;
     flex-direction: row;;
-    border: 2px solid orange; /* Creates the box border */
+    /* border: 2px solid orange; Creates the box border */
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
@@ -100,17 +102,30 @@ img.top-left-logo {
     /* align-items: top;  NOTE: For flex-direction: column, you might mean align-items: flex-start; */
     align-items: flex-start; /* Align items to the start (top) of the container */
     background: #e9edf2;
-    border: 2px solid red; /* Creates the box border */
+    border: 1.5px solid black; /* Creates the box border */
     /* Add transition to match the sidebar */
     transition: auto 0.7s ease-in-out, width 0.7s ease-in-out;
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
+h1{
+        font-size: 45px; /* Makes the text bigger */
+        margin-left: 40px; /* Tabs it over from the left */
+        transform: translateY(20px); /* Adds space at the bottom */
+        text-align: center; /* Centers the text itself */
+        width: 85%; /* Limits the width so the centering works better */
+        font-family: 'Roboto', sans-serif; /* Changes the font */
+}
 h1::after
 {
     content: ' ';
     display: block;
     width: 90%;
+}
+
+h2 {
+    margin-left: 40px; /* Adds space from the left wall */
+    font-family: 'Roboto', sans-serif;
 }
 
 h2:after
@@ -121,18 +136,35 @@ h2:after
     width: 90%
 }
 
+::-webkit-scrollbar {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    width: 16px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color:  #a3a3a3;
+    border-radius: 100px;
+    border: 4px solid lightgray;
+}
+
 .scroll-box {
+    margin-left: 15px;
     width: 90%;
     height: auto;
     overflow-y: auto;
-    border: 1px solid #ccc;
-    padding: 10px;
+    background: transparent;
+    border: 0px solid #ccc;
+    /* padding: 10px; */
     direction: rtl;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
 }
 
 .content-wrapper {
     direction: ltr; /* Keep the text flowing from left to right */
-     padding-right: 10px; /*This compensates for the scrollbar */
+    padding-right: 10px; /* This compensates for the scrollbar */
+    background-color: transparent;
 }
 
 .box-lead{
@@ -144,17 +176,26 @@ h2:after
     /* align-items: top;  NOTE: For flex-direction: column, you might mean align-items: flex-start; */
     align-items: flex-start; /* Align items to the start (top) of the container */
     background: #e9edf2;
-    border: 2px solid red; /* Creates the box border */
+    border: 1.5px solid black; /* Creates the box border */
     /* Add transition to match the sidebar */
     transition: auto 0.7s ease-in-out, width 0.7s ease-in-out;
     box-sizing: border-box; /* REMOVE ONCE BORDER IS REMOVED */
 }
 
+
 .entry {
     display: flex;
-    background-color: #ffffff;
+    background-color: white;
     padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-right: 10px;
+    margin-left: 10px;
 }
+
+
 
 .entry-img {
     width: 150px; /* Adjust image width */
@@ -188,22 +229,41 @@ h2:after
 }
 
 .review {
+    width: 24vw;
     font-size: 14px;
     flex: 1;
     margin-left: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .box-stats{
     direction: ltr;
     width: 90%;
     height: auto;
-    border: 1px solid #ccc;
+    border: 0px solid #ccc;
     padding: 10px;
-
+    margin-left: 30px;
+    transform: translateY(-20px);
 }
 
 .number {
     flex-direction: row-reverse;
     font-weight: bold;
     font-size: 1.5em;
+}
+
+.entry-card {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    padding: 1px 16px;
+    margin-left: 20vw;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: 0.2s ease-in-out;
+    width: 40vw;
+    align-items: flex-start; /* align top of image and text */
+    transition: all 0.7s ease-in-out;
 }
