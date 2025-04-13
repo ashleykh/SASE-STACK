@@ -181,19 +181,21 @@ def get_item_list(category_id):
 @app.route('/add-item',methods=['POST'])
 def add_item():
     data = request.get_json()
-    category_id = data.get('category_id')
+    # category_id = data.get('category_id')
+    user_id = data.get('user_id')
+    category_name = data.get('category_name')
     title = data.get('title')
     rating = data.get('rating')
     review = data.get('review')
     image = data.get('image')
 
-    if not all([category_id, title, rating, review, image]):
+    if not all([category_name, title, rating, review, image]):
         return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
     
     session = Session()
-    category = session.query(Category).filter_by(id=category_id).first()
+    category = session.query(Category).filter_by(user_id=user_id, name=category_name).first()
     if(category):
-        new_item = Item(category_id=category_id, title=title, rating=rating, review=review, image=image)
+        new_item = Item(category_id=category.id, title=title, rating=rating, review=review, image=image)
         session.add(new_item)
         session.commit()
         session.close()

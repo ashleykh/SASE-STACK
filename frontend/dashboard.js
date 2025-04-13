@@ -221,6 +221,8 @@ entryForm.addEventListener('submit', (event) => {
 
   console.log('New Entry Added:', { category: currentCategory, title, rating, review, image: uploadedImageDataURL });
 
+  addItemToDatabase(localStorage.getItem('userid'), currentCategory, title, rating, review, uploadedImageDataURL);
+
   // Clear the form fields
   entryForm.reset();
 
@@ -558,6 +560,35 @@ function addCategoryToDatabase(user_id, category_name) {
       console.log('category added')
     } else {
       console.log('error category not added')
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function addItemToDatabase(user_id, category_name, title, rating, review, image) {
+
+  fetch('http://127.0.0.1:5000/add-item', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name,
+      'title': title,
+      'rating': rating,
+      'review': review,
+      'image': image
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('item added')
+    } else {
+      console.log('error item not added')
     }
   })
   .catch(error=>{
