@@ -13,6 +13,12 @@ var categoryNames = []; // Array to store category names
 var uploadedImageDataURL = ''; // Image URL to Upload
 let editingEntryTitle = null; // Track which entry is being edited 
 
+//if item was clicked, its in edit mode
+var isEditting = false;
+//stores old item so it can be searched in db for editting
+var itemEditted = {};
+
+
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
@@ -114,6 +120,8 @@ entryButton.addEventListener('click', () => {
   entryForm.reset();
   imagePreview.style.backgroundImage= '';
   ratingStars.forEach(star => star.classList.remove('active'));
+
+  isEditting = false;
 });
 
 // Close/Hide the modal when the close button (×) is clicked
@@ -121,6 +129,8 @@ closeModalBtn.addEventListener('click', () => {
   modal.style.display = 'none';
   entryForm.reset();
   editingEntryTitle = null;
+  isEditting = false;
+  console.log(isEditting)
 });
 
 // Close/Hide the modal if the user clicks outside of the modal content
@@ -129,6 +139,8 @@ window.addEventListener('click', (event) => {
     modal.style.display = 'none';
     entryForm.reset();
     editingEntryTitle = null;
+    isEditting = false;
+    console.log(isEditting)
   }
 });
 
@@ -223,7 +235,15 @@ entryForm.addEventListener('submit', (event) => {
 
   console.log('New Entry Added:', { category: currentCategory, title, rating, review, image: uploadedImageDataURL });
 
-  addItemToDatabase(localStorage.getItem('userid'), currentCategory, title, rating, review, uploadedImageDataURL);
+  userid = localStorage.getItem('userid')
+
+  if(isEditting === false) {
+    addItemToDatabase(userid, currentCategory, title, rating, review, uploadedImageDataURL);
+  }
+  else {
+    editItemToDatabase(userid,currentCategory,itemEditted.title,title,rating,review,uploadedImageDataURL)
+  }
+  
 
   // Clear the form fields
   entryForm.reset();
@@ -369,7 +389,7 @@ function displayContent(category) {
   contentBox.textContent = '';
   // Recieves all content from category
   for (const item in info[category]) {
-    const { rating, review, image } = info[category][item];
+    const { rating, review, image, id } = info[category][item];
 
     displayItemInfo(item,rating,review, image) // Add in picture data!
   }
@@ -469,6 +489,11 @@ function displayItemInfo(title, rating, review, image) { //dashboard.js
       imagePreview.style.backgroundImage = '';
     }
     modal.style.display = 'flex';
+
+    isEditting = true;
+    itemEditted = {'title': title, 'rating': rating, 'review': review, 'image': image, 'category_name': currentCategory}
+    console.log(itemEditted)
+    // console.log('edit', title, rating, review, image, currentCategory, isEditting)
   });
 
   contentBox.appendChild(allDiv);
@@ -589,6 +614,36 @@ function addItemToDatabase(user_id, category_name, title, rating, review, image)
   .then(result => {
     if (result.status === 'success') {
       console.log('item added')
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function editItemToDatabase(user_id, category_name, old_title, title, rating, review, image) {
+
+  fetch('http://127.0.0.1:5000/edit-item', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name,
+      'old_title': old_title,
+      'title': title,
+      'rating': rating,
+      'review': review,
+      'image': image
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('item editted')
     } else {
       console.log(result.message)
     }

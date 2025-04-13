@@ -170,7 +170,7 @@ def get_item_list(category_id):
 
         item_list = {}
         for item in result:
-            item_list[item.title] = {'rating': item.rating, 'review': item.review, 'image': item.image}
+            item_list[item.title] = {'rating': item.rating, 'review': item.review, 'image': item.image, 'id': item.id}
             # item_list.append({'title': item.title, 'rating': item.rating, 'review': item.review, 'image': item.image})
         
         return item_list
@@ -211,6 +211,44 @@ def add_item():
     else:
         session.close()
         return jsonify({'status': 'error', 'message': 'Invalid category id'}), 400
+
+@app.route('/edit-item',methods=['POST'])
+def edit_item():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    category_name = data.get('category_name')
+    old_title = data.get('old_title')
+    title = data.get('title')
+    rating = data.get('rating')
+    review = data.get('review')
+    image = data.get('image')
+
+    if not all([user_id, category_name, old_title, title, review]):
+        return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
+    
+    if (not image):
+        image = ''
+    
+    if (not review):
+        review = '0'
+
+    session = Session()
+
+    category = session.query(Category).filter_by(user_id=user_id, name=category_name).first()
+
+    item = session.query(Item).filter_by(category_id=category.id,title=old_title).first()
+    if(item):
+        item.title = title
+        item.rating = rating
+        item.review = review
+        item.image = image
+        session.commit()
+        session.close()
+
+        return jsonify({'status': 'success', 'message': 'Item editted'})
+    else:
+        session.close()
+        return jsonify({'status': 'error', 'message': 'Item not added'}), 400
 
 #get categories with items together
 @app.route('/user-info',methods=['GET'])
