@@ -170,7 +170,7 @@ def get_item_list(category_id):
 
         item_list = {}
         for item in result:
-            item_list[item.title] = {'rating': item.rating, 'review': item.review, 'image': item.image}
+            item_list[item.title] = {'rating': item.rating, 'review': item.review, 'image': item.image, 'id': item.id}
             # item_list.append({'title': item.title, 'rating': item.rating, 'review': item.review, 'image': item.image})
         
         return item_list
@@ -194,6 +194,10 @@ def add_item():
     
     session = Session()
     category = session.query(Category).filter_by(user_id=user_id, name=category_name).first()
+
+    #if item already exists we r gonna update it to the new values that the user changes it to
+    
+
     if(category):
         new_item = Item(category_id=category.id, title=title, rating=rating, review=review, image=image)
         session.add(new_item)
