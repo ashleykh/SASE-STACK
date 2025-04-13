@@ -66,12 +66,12 @@ pullout.addEventListener('click', () => {
 
   if (categoryBox.classList.contains('show')) {
     // Sidebar is open
-    boxList.style.transition = 'none';
+    //boxList.style.transition = 'none';
     boxList.style.width = '100%';
     boxContainer.classList.add('sidebar-closed');
   } else {
     // Sidebar is closed
-    boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect
+    //boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect    
     boxList.style.width = '70%';
     boxContainer.classList.remove('sidebar-closed');
   }
