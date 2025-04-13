@@ -60,6 +60,7 @@ def sign_up():
 
     # Add to database
     session.add(new_user)
+    
     session.commit()
     session.close()
 

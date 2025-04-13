@@ -27,9 +27,7 @@ const search = document.querySelector(".category-search")
 const sortInput = document.getElementById('sortBy');
 const entryCard = document.querySelector('.box-list-content');
 
-// --- NEW CODE: Run this when the DOM is ready ---
-document.addEventListener('DOMContentLoaded', async () => {
-
+window.onload = async function() {
   info = await getInfo(localStorage.getItem('userid'))
 
   console.log(info)
@@ -39,8 +37,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateInitialCategoryNames(categoryName) // Add category names to the list
   }
   openFirstCategory();
+}
 
-});
+// --- NEW CODE: Run this when the DOM is ready ---
+// document.addEventListener('DOMContentLoaded', async () => {
+
+//   info = await getInfo(localStorage.getItem('userid'))
+
+//   console.log(info)
+
+//   for (const categoryName in info) {
+//     console.log(categoryName)
+//     populateInitialCategoryNames(categoryName) // Add category names to the list
+//   }
+//   openFirstCategory();
+
+// });
 
 //Search Bar
 search.addEventListener('input', () => {
@@ -275,12 +287,15 @@ function addCategoryName(name = "enter category name") {
    
     // Handle duplicate names at creation time
     let uniqueName = name;
-    if(uniqueName in info) {
+    if(info && uniqueName in info) {
       let i = 1;
       while ((uniqueName + " (" + i + ")") in info) {
         i++;
       }
       uniqueName = name + " (" + i + ")";
+    }
+    else {
+      info = {}
     }
    
     input.value = uniqueName;
