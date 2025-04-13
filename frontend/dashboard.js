@@ -370,6 +370,8 @@ function deleteCategoryName() {
       if (confirm(`Are you sure you want to delete "${categoryName}"?`)) {
         delete info[categoryName]; // Remove from data
         input.remove(); // Remove from DOM
+        userid = localStorage.getItem('userid')
+        deleteCategoryToDatabase(userid,currentCategory);
         currentCategory = null; // Reset current category
         displayContent(currentCategory); // Clear display
       }
@@ -602,6 +604,31 @@ function addCategoryToDatabase(user_id, category_name) {
       console.log('category added')
     } else {
       console.log('error category not added')
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function deleteCategoryToDatabase(user_id, category_name) {
+
+  fetch('http://127.0.0.1:5000/delete-category', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log(result.message)
+    } else {
+      console.log(result.message)
     }
   })
   .catch(error=>{

@@ -113,6 +113,31 @@ def add_category():
         session.close()
         return jsonify({'status': 'error', 'message': 'User does not exist'}), 400
 
+@app.route('/delete-category',methods=['POST'])
+def delete_category():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    category_name = data.get('category_name')
+
+    if not all([user_id,category_name]):
+        return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
+    
+    session = Session()
+    user = session.query(User).filter_by(id=user_id).first()
+    if(user):
+        category = session.query(Category).filter_by(user_id=user_id,name=category_name).first()
+        if(category):
+            session.delete(category)
+            session.commit()
+            session.close()
+            return jsonify({'status': 'success', 'message': 'Category deleted'})
+        else:
+            session.close()
+            return jsonify({'status': 'error', 'message': 'Category does not exist'}), 400
+    else:
+        session.close()
+        return jsonify({'status': 'error', 'message': 'User does not exist'}), 400
+
 @app.route('/edit-category',methods=['POST'])
 def edit_category():
     data = request.get_json()
