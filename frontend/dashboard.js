@@ -193,10 +193,6 @@ entryForm.addEventListener('submit', (event) => {
   }
 
   //deal with duplicates
-  // if(info[currentCategory][title]) {
-  //   title = (title,",,")
-  // }
-
   if(info && info[currentCategory][title]) {
     let i = 1;
     while (info[currentCategory][(title + " (" + i + ")")]) {
@@ -499,6 +495,9 @@ function closeCategoryNameInput(input) {
     info[input.value] = {};
   }
 
+  userid = localStorage.getItem('userid')
+  console.log(originalValue,input.value)
+  editCategoryToDatabase(userid,originalValue,input.value)
 
   input.dataset.originalValue = input.value; // Update the stored value
   input.readOnly = true;
@@ -545,6 +544,32 @@ function addCategoryToDatabase(user_id, category_name) {
       console.log('category added')
     } else {
       console.log('error category not added')
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function editCategoryToDatabase(user_id, old_category_name, new_category_name) {
+
+  fetch('http://127.0.0.1:5000/edit-category', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'old_category_name': old_category_name,
+      'category_name': new_category_name
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log(result.message)
+    } else {
+      console.log(result.message)
     }
   })
   .catch(error=>{
