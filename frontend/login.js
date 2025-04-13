@@ -17,6 +17,7 @@ form.addEventListener('submit', function(e) {
     .then(result => {
         if (result.status === 'success') {
             localStorage.setItem('userid', result.id)
+            console.log(result.id)
             window.location.href = 'home.html';
         } else {
             console.log('Error:', result.message);
