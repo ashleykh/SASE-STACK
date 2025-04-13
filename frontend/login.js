@@ -37,12 +37,7 @@ function login(){
             if (result.status === 'success') {
                 localStorage.setItem('userid',result.id)
                 // localStorage.setItem('userid',result.id)
-                if(localStorage.getItem('userid') === result.id.toString()) {
-                    window.location.href = 'home.html';
-                }
-                else {
-                    console.log("error with userid", localStorage.getItem('userid'), result.id.toString())
-                }
+                window.location.href = 'home.html';
             } else {
                 if (result.message === 'User does not exist') {
                     passwordInput.setCustomValidity("This user does not exist.");
