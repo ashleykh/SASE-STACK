@@ -172,7 +172,7 @@ entryForm.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevent the form from refreshing the page
 
   // Get form values
-  const title = document.getElementById('title').value;
+  var title = document.getElementById('title').value;
   const review = document.getElementById('review').value;
   const rating = Array.from(ratingStars).filter(star => star.classList.contains('active')).length;
 
@@ -196,6 +196,14 @@ entryForm.addEventListener('submit', (event) => {
   // if(info[currentCategory][title]) {
   //   title = (title,",,")
   // }
+
+  if(info && info[currentCategory][title]) {
+    let i = 1;
+    while (info[currentCategory][(title + " (" + i + ")")]) {
+      i++;
+    }
+    title = title + " (" + i + ")";
+  }
 
   // Add the new entry with its title, rating, and review
   info[currentCategory][title] = {
