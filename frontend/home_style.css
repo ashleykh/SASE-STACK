@@ -56,24 +56,32 @@ button:hover {
 
 /* dashboard button in navbar */
 .navbtn-dash{ 
-    background: rgba(0, 0, 0, 0.1);
     color: white;
     font-size: 35px;
 }
 
+.navbtn-dash:hover {
+    background: rgba(0, 0, 0, 0.1); /* Darker on hover */
+}
 /* list/profile button in navbar */
 .navbtn-list{ 
-    background: rgba(0, 0, 0, 0.1);;
     color: white;
     font-size: 35px;
+}
+
+.navbtn-list:hover {
+    background: rgba(0, 0, 0, 0.1); /* Darker on hover */
 }
 
 /* logout button for navbar */
 .navbtn-log-out{ 
-    background: rgba(0, 0, 0, 0.1);
     margin-right: 2vh;
     color: white;
     font-size: 35px;
+}
+
+.navbtn-log-out:hover {
+    background: rgba(0, 0, 0, 0.1); /* Darker on hover */
 }
 
 /* sase logo */
@@ -140,13 +148,12 @@ h2:after
     display: flex;
     flex-direction: column;
     background-color: lightgray;
-    width: 16px; /* Width of the scrollbar */
+    width: 7px; /* Width of the scrollbar */
 }
 
 ::-webkit-scrollbar-thumb {
     background-color:  #a3a3a3;
     border-radius: 100px;
-    border: 4px solid lightgray;
 }
 
 .scroll-box {

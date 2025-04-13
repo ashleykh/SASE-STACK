@@ -54,24 +54,32 @@ button:hover {
 
 /* dashboard button in navbar */
 .navbtn-dash{ 
-    background: rgba(0, 0, 0, 0.1);
     color: white;
     font-size: 35px;
 }
 
+.navbtn-dash:hover {
+    background: rgba(0, 0, 0, 0.1); /* Darker on hover */
+}
 /* list/profile button in navbar */
 .navbtn-list{ 
-    background: rgba(0, 0, 0, 0.1);;
     color: white;
     font-size: 35px;
+}
+
+.navbtn-list:hover {
+    background: rgba(0, 0, 0, 0.1); /* Darker on hover */
 }
 
 /* logout button for navbar */
 .navbtn-log-out{ 
-    background: rgba(0, 0, 0, 0.1);
     margin-right: 2vh;
     color: white;
     font-size: 35px;
+}
+
+.navbtn-log-out:hover {
+    background: rgba(0, 0, 0, 0.1); /* Darker on hover */
 }
 
 /* sase logo */
@@ -185,6 +193,7 @@ img.top-left-logo {
     height: 50%;
     width: 20vw;
     transition: all 0.7s ease-in-out;
+    padding-left: 12px;
 }
 
 
@@ -476,14 +485,42 @@ img.top-left-logo {
 
 .category-list-add-btn{
     background: linear-gradient(to right, #0762d8 , #2de5e0);
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
-    width: 100%;
+    width: 80%;
     height: 15%;
-    border-radius: 1px;
+    border-radius: 3px;
     border-top: 2.5px solid;
     border-color: black;
 }
+
+.category-button-row{
+    display: flex;
+}
+
+.category-button-row > button {
+    flex-grow: 3; /* Makes buttons take equal space */
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(to right, #0762d8 , #2de5e0);
+    border-radius: 1px;
+    border: 1.3px solid;
+    border-top: 2px solid;
+    border-color: black;
+}
+
+.category-list-delete-btn{
+    background: linear-gradient(to right, #0762d8 , #2de5e0);
+    font-weight: bold;
+    text-align: center;
+    width: 40%; 
+    height: 10px;
+    border-radius: 3px;
+    border-top: 2.5px solid;
+    border-color: black;
+}
+
 
 .category-name-container{
     width: 100%;
