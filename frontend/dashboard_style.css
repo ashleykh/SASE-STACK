@@ -420,7 +420,7 @@ img.top-left-logo {
 
 .entry-img {
     width: 19vh;  /* Set a fixed width for the image */
-    height: 28vh; /* Set a fixed height for the image */
+    height: 25vh; /* Set a fixed height for the image */
     background-color: #888;
     background-size: cover;
     background-position: center;
