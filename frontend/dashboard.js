@@ -748,4 +748,8 @@ function deleteItemToDatabase(user_id, category_name, title, rating, review, ima
   .catch(error=>{
     console.log(error)
   })
+
+  function logout() {
+    localStorage.clear('userid')
+  }
 }

@@ -30,6 +30,7 @@ function login(){
         .then(result => {
             if (result.status === 'success') {
                 localStorage.setItem('userid',result.id)
+                // localStorage.setItem('userid',result.id)
                 window.location.href = 'home.html';
             } else {
                 if (result.message === 'User does not exist') {
