@@ -9,7 +9,6 @@ var categoryNames = []; // Array to store category names
 var uploadedImageDataURL = ''; // Image URL to Upload
 let editingEntryTitle = null; // Track which entry is being edited 
 
-
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
 const entryButton = document.querySelector('.category-btn'); // Entry button
@@ -21,7 +20,7 @@ const ratingStars = document.querySelectorAll('.rating-star');
 const pullout = document.querySelector('.menu-icon');
 const categoryBox = document.querySelector('.box-category');
 const search = document.querySelector(".category-search")
-const sortInput = document.querySelector('input[list="sort-options"]');
+const sortInput = document.getElementById('sortBy');
 const entryCard = document.querySelector('.box-list-content');
 
 // --- NEW CODE: Run this when the DOM is ready ---
@@ -60,19 +59,24 @@ search.addEventListener('input', () => {
 });
 
 // close or pull out category list after clicking menu icon
-pullout.addEventListener('click', () =>
-  {
-    categoryBox.classList.toggle('show');
-    const boxList = document.querySelector('.box-list');
-    if (categoryBox.classList.contains('show')) {
-      //boxList.style.transition = 'none';
-      boxList.style.width = '100%';
-    } else {
-      //boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect
-      boxList.style.width = '70%'; // Reset to original width
-    }
-    
-  });
+pullout.addEventListener('click', () => {
+  categoryBox.classList.toggle('show');
+  const boxList = document.querySelector('.box-list');
+  const boxContainer = document.querySelector('.box-container');
+
+  if (categoryBox.classList.contains('show')) {
+    // Sidebar is open
+    //boxList.style.transition = 'none';
+    boxList.style.width = '100%';
+    boxContainer.classList.add('sidebar-closed');
+  } else {
+    // Sidebar is closed
+    //boxList.style.transition = 'right 0.7s ease, width 0.7s ease'; // Add transition effect    
+    boxList.style.width = '70%';
+    boxContainer.classList.remove('sidebar-closed');
+  }
+});
+
 
 // Open the modal when the + Entry button is clicked
 entryButton.addEventListener('click', () => {
@@ -100,21 +104,22 @@ window.addEventListener('click', (event) => {
 });
 
 // Sort-by function
-sortInput.addEventListener('input', () => {
-  const sortBy = sortInput.value.toLowerCase();
-
+sortInput.addEventListener('change', () => {
+  const sortBy = sortInput.value;
   if (!currentCategory || !(currentCategory in info)) return;
 
   const entries = Object.entries(info[currentCategory]);
 
-  // Perform sorting
-  if (sortBy === 'rating(descending)') {
+  if (sortBy === 'rating-desc') {
     entries.sort((a, b) => b[1].rating - a[1].rating); // Descending
-  } if (sortBy === 'rating(ascending)') {
+  } 
+  else if (sortBy === 'rating-asc') {
     entries.sort((a, b) => a[1].rating - b[1].rating); // Ascending
-  } else if (sortBy === 'name(a-z)') {
+  } 
+  else if (sortBy === 'name(a-z)') {
     entries.sort((a, b) => a[0].localeCompare(b[0])); // A-Z
-  }else if (sortBy === 'name(z-a)') {
+  }
+  else if (sortBy === 'name(z-a)') {
     entries.sort((a, b) => b[0].localeCompare(a[0])); // Z-A
   }//dates
 
