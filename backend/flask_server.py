@@ -200,8 +200,9 @@ def add_item():
 
     session = Session()
     category = session.query(Category).filter_by(user_id=user_id, name=category_name).first()
+    item = session.query(Item).filter_by(category_id=category.id, title=title).first()
 
-    if(category):
+    if(category and not item):
         new_item = Item(category_id=category.id, title=title, rating=rating, review=review, image=image)
         session.add(new_item)
         session.commit()
@@ -210,7 +211,7 @@ def add_item():
         return jsonify({'status': 'success', 'message': 'Item added'})
     else:
         session.close()
-        return jsonify({'status': 'error', 'message': 'Invalid category id'}), 400
+        return jsonify({'status': 'error', 'message': 'Invalid category id or duplicate'}), 400
 
 @app.route('/edit-item',methods=['POST'])
 def edit_item():
@@ -246,6 +247,41 @@ def edit_item():
         session.close()
 
         return jsonify({'status': 'success', 'message': 'Item editted'})
+    else:
+        session.close()
+        return jsonify({'status': 'error', 'message': 'Item not added'}), 400
+
+@app.route('/delete-item',methods=['POST'])
+def delete_item():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    category_name = data.get('category_name')
+    title = data.get('title')
+    rating = data.get('rating')
+    review = data.get('review')
+    image = data.get('image')
+
+    # if not all([user_id, category_name, title, review]):
+    #     return jsonify({'status': 'error', 'message': 'All fields are required'}), 400
+    
+    if (not image):
+        image = ''
+    
+    if (not review):
+        review = '0'
+
+    session = Session()
+
+    category = session.query(Category).filter_by(user_id=user_id, name=category_name).first()
+
+    item = session.query(Item).filter_by(category_id=category.id,title=title).first()
+    
+    if(item):
+        session.delete(item)
+        session.commit()
+        session.close()
+
+        return jsonify({'status': 'success', 'message': 'Item deleted'})
     else:
         session.close()
         return jsonify({'status': 'error', 'message': 'Item not added'}), 400
