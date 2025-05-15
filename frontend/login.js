@@ -2,12 +2,18 @@ var form = null;
 var emailInput = null;
 var passwordInput = null;
 
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
+//     form = document.getElementById('login-form');
+//     emailInput = form.querySelector('input[name="email"]');
+//     passwordInput = form.querySelector('input[name="password"]');
+//     login();
+// });
+
+window.onload = function() {
     form = document.getElementById('login-form');
     emailInput = form.querySelector('input[name="email"]');
     passwordInput = form.querySelector('input[name="password"]');
-    login();
-});
+}
 
 function login(){
     form.addEventListener('submit', function(e) {
@@ -29,7 +35,14 @@ function login(){
         .then(response => response.json())
         .then(result => {
             if (result.status === 'success') {
-                window.location.href = 'home.html';
+                localStorage.setItem('userid',result.id.toString())
+                if(localStorage.getItem('userid') === result.id.toString()) {
+                    window.location.href = 'home.html';
+                }
+                else {
+                    console.log(localStorage.getItem('userid'),result.id.toString())
+                }
+                
             } else {
                 if (result.message === 'User does not exist') {
                     passwordInput.setCustomValidity("This user does not exist.");

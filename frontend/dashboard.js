@@ -1,13 +1,23 @@
 // Sample information to display
-var info = {
-  'ding tea': {'wintermelon milk tea': {rating: 2, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
-  'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
-};
+// var info = {
+//   'ding tea': {'wintermelon milk tea': {rating: 2, review: 'good', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
+//   'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
+// };
+
+// var info = getInfo(localStorage.getItem('userid'))
+
+var info = {}
 
 var currentCategory; // Default category
 var categoryNames = []; // Array to store category names
 var uploadedImageDataURL = ''; // Image URL to Upload
 let editingEntryTitle = null; // Track which entry is being edited 
+
+//if item was clicked, its in edit mode
+var isEditting = false;
+//stores old item so it can be searched in db for editting
+var itemEditted = {};
+
 
 // Get DOM (Document Object Model) elements
 const modal = document.getElementById('myModal');
@@ -23,13 +33,38 @@ const search = document.querySelector(".category-search")
 const sortInput = document.getElementById('sortBy');
 const entryCard = document.querySelector('.box-list-content');
 
-// --- NEW CODE: Run this when the DOM is ready ---
-document.addEventListener('DOMContentLoaded', () => {
-  for (const categoryName in info) {
-    populateInitialCategoryNames(categoryName) // Add category names to the list
+window.onload = async function() {
+  // info = await getInfo(localStorage.getItem('userid'))
+  userid = localStorage.getItem('userid')
+  info = await getInfo(userid)
+
+  console.log("hehe",await getInfo(localStorage.getItem('userid')))
+  console.log("asd",info)
+
+  if(info) {
+    for (const categoryName in info) {
+      console.log(categoryName)
+      populateInitialCategoryNames(categoryName) // Add category names to the list
+    }
+    openFirstCategory();
   }
-  openFirstCategory();
-});
+
+}
+
+// --- NEW CODE: Run this when the DOM is ready ---
+// document.addEventListener('DOMContentLoaded', async () => {
+
+//   info = await getInfo(localStorage.getItem('userid'))
+
+//   console.log(info)
+
+//   for (const categoryName in info) {
+//     console.log(categoryName)
+//     populateInitialCategoryNames(categoryName) // Add category names to the list
+//   }
+//   openFirstCategory();
+
+// });
 
 //Search Bar
 search.addEventListener('input', () => {
@@ -85,6 +120,8 @@ entryButton.addEventListener('click', () => {
   entryForm.reset();
   imagePreview.style.backgroundImage= '';
   ratingStars.forEach(star => star.classList.remove('active'));
+
+  isEditting = false;
 });
 
 // Close/Hide the modal when the close button (×) is clicked
@@ -92,6 +129,8 @@ closeModalBtn.addEventListener('click', () => {
   modal.style.display = 'none';
   entryForm.reset();
   editingEntryTitle = null;
+  isEditting = false;
+  console.log(isEditting)
 });
 
 // Close/Hide the modal if the user clicks outside of the modal content
@@ -100,6 +139,8 @@ window.addEventListener('click', (event) => {
     modal.style.display = 'none';
     entryForm.reset();
     editingEntryTitle = null;
+    isEditting = false;
+    console.log(isEditting)
   }
 });
 
@@ -165,7 +206,7 @@ entryForm.addEventListener('submit', (event) => {
   event.preventDefault(); // Prevent the form from refreshing the page
 
   // Get form values
-  const title = document.getElementById('title').value;
+  var title = document.getElementById('title').value;
   const review = document.getElementById('review').value;
   const rating = Array.from(ratingStars).filter(star => star.classList.contains('active')).length;
 
@@ -185,6 +226,15 @@ entryForm.addEventListener('submit', (event) => {
     delete info[currentCategory][editingEntryTitle];
   }
 
+  //deal with duplicates
+  if(info && info[currentCategory][title]) {
+    let i = 1;
+    while (info[currentCategory][(title + " (" + i + ")")]) {
+      i++;
+    }
+    title = title + " (" + i + ")";
+  }
+
   // Add the new entry with its title, rating, and review
   info[currentCategory][title] = {
     rating: rating,
@@ -193,6 +243,16 @@ entryForm.addEventListener('submit', (event) => {
   };
 
   console.log('New Entry Added:', { category: currentCategory, title, rating, review, image: uploadedImageDataURL });
+
+  userid = localStorage.getItem('userid')
+
+  if(isEditting === false) {
+    addItemToDatabase(userid, currentCategory, title, rating, review, uploadedImageDataURL);
+  }
+  else {
+    editItemToDatabase(userid,currentCategory,itemEditted.title,title,rating,review,uploadedImageDataURL)
+  }
+  
 
   // Clear the form fields
   entryForm.reset();
@@ -264,18 +324,23 @@ function addCategoryName(name = "enter category name") {
    
     // Handle duplicate names at creation time
     let uniqueName = name;
-    if(uniqueName in info) {
+    if(info && uniqueName in info) {
       let i = 1;
       while ((uniqueName + " (" + i + ")") in info) {
         i++;
       }
       uniqueName = name + " (" + i + ")";
     }
+    else {
+      info = {}
+    }
    
     input.value = uniqueName;
     info[uniqueName] = {}; // Initialize as empty object
     input.dataset.originalValue = uniqueName; // Store the original value
    
+    addCategoryToDatabase(localStorage.getItem('userid'), uniqueName)
+
     categoryBox.appendChild(input);
     input.select();
 
@@ -305,6 +370,8 @@ function deleteCategoryName() {
       if (confirm(`Are you sure you want to delete "${categoryName}"?`)) {
         delete info[categoryName]; // Remove from data
         input.remove(); // Remove from DOM
+        userid = localStorage.getItem('userid')
+        deleteCategoryToDatabase(userid,currentCategory);
         currentCategory = null; // Reset current category
         displayContent(currentCategory); // Clear display
       }
@@ -333,7 +400,7 @@ function displayContent(category) {
   contentBox.textContent = '';
   // Recieves all content from category
   for (const item in info[category]) {
-    const { rating, review, image } = info[category][item];
+    const { rating, review, image, id } = info[category][item];
 
     displayItemInfo(item,rating,review, image) // Add in picture data!
   }
@@ -371,6 +438,9 @@ function displayItemInfo(title, rating, review, image) { //dashboard.js
   trashIcon.addEventListener('click', (e) => {
     e.stopPropagation();
     if(confirm(`Are you sure you want to delete "${title}"?`)) {
+      //need userid, category_name, title, rating, review, image
+      userid = localStorage.getItem('userid')
+      deleteItemToDatabase(userid,currentCategory,title,rating,review,image)
       delete info[currentCategory][title]; // Remove from data
       allDiv.remove(); // Remove from DOM
     }
@@ -433,6 +503,11 @@ function displayItemInfo(title, rating, review, image) { //dashboard.js
       imagePreview.style.backgroundImage = '';
     }
     modal.style.display = 'flex';
+
+    isEditting = true;
+    itemEditted = {'title': title, 'rating': rating, 'review': review, 'image': image, 'category_name': currentCategory}
+    console.log(itemEditted)
+    // console.log('edit', title, rating, review, image, currentCategory, isEditting)
   });
 
   contentBox.appendChild(allDiv);
@@ -448,6 +523,7 @@ function openCategoryNameInput(input) {
 }
 
 function closeCategoryNameInput(input) {
+
   const originalValue = input.dataset.originalValue;
  
   // If the value didn't change, do nothing to the object
@@ -479,8 +555,201 @@ function closeCategoryNameInput(input) {
     info[input.value] = {};
   }
 
+  userid = localStorage.getItem('userid')
+  console.log(originalValue,input.value)
+  editCategoryToDatabase(userid,originalValue,input.value)
 
   input.dataset.originalValue = input.value; // Update the stored value
   input.readOnly = true;
   console.log(info);
+}
+
+async function getInfo(user_id) {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/user-info', {
+      method: 'GET',
+      headers: {
+          'userid': user_id
+      }
+    });
+  
+    const result = await response.json()
+  
+    if (result.status === 'success') {
+      return result.info
+    } else {
+        console.log('Error:', result.message);
+    }
+
+  } catch(error) {
+      console.error('Error:', error);
+  };
+}
+
+function addCategoryToDatabase(user_id, category_name) {
+
+  fetch('http://127.0.0.1:5000/add-category', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('category added')
+    } else {
+      console.log('error category not added')
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function deleteCategoryToDatabase(user_id, category_name) {
+
+  fetch('http://127.0.0.1:5000/delete-category', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log(result.message)
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function editCategoryToDatabase(user_id, old_category_name, new_category_name) {
+
+  fetch('http://127.0.0.1:5000/edit-category', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'old_category_name': old_category_name,
+      'category_name': new_category_name
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log(result.message)
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function addItemToDatabase(user_id, category_name, title, rating, review, image) {
+
+  fetch('http://127.0.0.1:5000/add-item', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name,
+      'title': title,
+      'rating': rating,
+      'review': review,
+      'image': image
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('item added')
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function editItemToDatabase(user_id, category_name, old_title, title, rating, review, image) {
+
+  fetch('http://127.0.0.1:5000/edit-item', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name,
+      'old_title': old_title,
+      'title': title,
+      'rating': rating,
+      'review': review,
+      'image': image
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('item editted')
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+}
+
+function deleteItemToDatabase(user_id, category_name, title, rating, review, image) {
+
+  fetch('http://127.0.0.1:5000/delete-item', {
+    method: 'POST',
+    headers: {
+     'Content-Type': 'application/json' 
+    },
+    body: JSON.stringify({
+      'user_id': user_id,
+      'category_name': category_name,
+      'title': title,
+      'rating': rating,
+      'review': review,
+      'image': image
+    })
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.status === 'success') {
+      console.log('item deleted')
+    } else {
+      console.log(result.message)
+    }
+  })
+  .catch(error=>{
+    console.log(error)
+  })
+
+  function logout() {
+    localStorage.clear('userid')
+  }
 }

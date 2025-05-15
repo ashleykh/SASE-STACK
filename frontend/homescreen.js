@@ -3,18 +3,13 @@
 //import { recent } from './dashboard.js';
 let recent = 0
 
-var info = 
-{
-    'ding tea': 
-    {
-        'wintermelon milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' },
-        'peach oolong tea': { rating: 4, review: 'good', image: '../images/yiyi.jpg' }
-    },
-    'boba tea': 
-    {
-        'mango milk tea': { rating: 5, review: 'good', image: '../images/yiyi.jpg' }
-    }
-};
+// var info = {
+//   'ding tea': {'wintermelon milk tea': {rating: 2, review: 'goodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgoodgood', image: ''}, 'peach oolong tea': {rating: 4, review: 'good', image: ''}, 'peacah oolong tea': {rating: 4, review: 'good', image: ''}, 'peachd oolong tea': {rating: 4, review: 'good', image: ''}, 'peach oodlong tea': {rating: 4, review: 'good', image: ''}},
+//   'boba tea': {'mango milk tea': {rating: 5, review: 'good', image: ''}}
+// };
+
+var info = {}
+
 
 var highlight = 
 {
@@ -31,7 +26,7 @@ var stats =
 
 const descriptions = 
 {
-    recent_creation: "new entries this month",
+    recent_creation: "hours slept btw shoutout to ryan",
     total_category: "lists made in lifetime",
     average_rating: "average rating",
     total_entries: "total entries made"
@@ -81,73 +76,85 @@ function gatherHighlights(info, highlight)
     }
 }
 
-function displayItemInfo(title, rating, review, image, contentBox) {
+function populateInitialCategoryNames(name) {
+    const categoryBox = document.getElementById("buttonList");
+    const input = document.createElement("input");
+    input.className = "category-name-btn-input";
+    input.type = "text";
+   
+    input.value = name;
+    input.dataset.originalValue = input.value;
+    categoryBox.appendChild(input);
+  
+  
+    // Turn input to button when done editing
+    input.onblur = function(){closeCategoryNameInput(input);};
+    input.ondblclick = function(){openCategoryNameInput(input);};
+    input.onclick = function(){selectCategoryNameInput(input);};
+    input.onkeydown = function(event) {
+      if(event.key === "Enter") {
+        input.blur(); // Better to blur than just set readOnly
+      }
+    };
+  }
+
+// Function to display an individual item
+function displayItemInfo(title, rating, review, image, contentBox)
+{
     // Create the entry div (wrapper for the whole item)
     const entryDiv = document.createElement('div');
     entryDiv.className = 'entry';
 
-    entryDiv.style.marginBottom = '15px'; // Space between entries
-    entryDiv.style.borderBottom = '1px #e0e0e0'; // Optional divider line
-    entryDiv.style.paddingBottom = '15px'; // Space before the divider
-    entryDiv.style.marginRight = '10px'; // Add right margin to separate from scrollbar
-  
-    // Create image div
-    const imageDiv = document.createElement('div');
-    imageDiv.className = 'entry-img';
-  
+    // Create image element (if no image, set default)
+    const entryImg = document.createElement('img');
+    entryImg.className = 'entry-img';
     if (image) {
-      // Normalize the path (replace backslashes with forward slashes)
-      const imagePath = image.replace(/\\/g, '/');
-  
-      // Set background image
-      imageDiv.style.backgroundImage = `url('${imagePath}')`;
-      imageDiv.style.backgroundSize = 'cover';
-      imageDiv.style.backgroundPosition = 'center';
-      imageDiv.style.backgroundColor = 'transparent';
-      imageDiv.style.width = '150px';
-      imageDiv.style.height = '200px';
+        entryImg.src = image;
+        entryImg.alt = title;
+    } else {
+        entryImg.style.backgroundColor = 'black'; // black box fallback
+        entryImg.style.width = '100px'; // or whatever your image size is
+        entryImg.style.height = '100px';
+        entryImg.style.display = 'inline-block'; // makes it behave like an image
     }
-  
+
     // Create the content wrapper
     const contentWrapper = document.createElement('div');
     contentWrapper.className = 'entry-content';
-  
+
     // Title
     const titleEl = document.createElement('h3');
     titleEl.className = 'title';
     titleEl.textContent = title;
-  
-    // Star rating
-    const stars = document.createElement('div');
-    stars.className = 'rating';
-    for (let i = 0; i < 5; i++) {
-      const star = document.createElement('span');
-      star.textContent = '★';
-      if (i < rating) {
-        star.style.color = '#3498db'; // Highlighted star
-      } else {
-        star.style.color = '#ccc'; // Unhighlighted star
-      }
-      stars.appendChild(star);
-    }
-  
-    // Review
+
+    // Rating
+    const ratingEl = document.createElement('div');
+    ratingEl.className = 'rating';
+    ratingEl.textContent = '★★★★★'.slice(0, rating); // Display stars according to rating
+
+    // Info section
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'info';
+
     const reviewEl = document.createElement('p');
     reviewEl.className = 'review';
     reviewEl.textContent = review;
-  
-    // Append components to the content wrapper
+
+    // Append rating and review to the info section
+    infoDiv.appendChild(ratingEl);
+    infoDiv.appendChild(reviewEl);
+
+    // Append title and info to the content wrapper
     contentWrapper.appendChild(titleEl);
-    contentWrapper.appendChild(stars);
-    contentWrapper.appendChild(reviewEl);
-  
+    contentWrapper.appendChild(infoDiv);
+
     // Append the image and content to the entry div
-    entryDiv.appendChild(imageDiv);
+    entryDiv.appendChild(entryImg);
     entryDiv.appendChild(contentWrapper);
-  
+
     // Add the entry div to the passed contentBox
     contentBox.appendChild(entryDiv);
-  }
+}
 
 
 // Function to populate the content dynamically for 'info'
@@ -212,12 +219,66 @@ function populateStats()
     }
 }
 
-stats = computeStats(info);
+async function getInfo(user_id) {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/user-info', {
+        method: 'GET',
+        headers: {
+            'userid': user_id
+        }
+      });
+    
+      const result = await response.json()
+    
+      if (result.status === 'success') {
+        return result.info
+      } else {
+          console.log('Error:', result.message);
+      }
+  
+    } catch(error) {
+        console.error('Error:', error);
+    };
+  }
 
-gatherHighlights(info, highlight);
 
-populateContent();
+document.addEventListener('DOMContentLoaded', async () => {
+    const userId = localStorage.getItem('userid');
+    info = await getInfo(userId); // info is populated from Flask here
 
-populateBest();
+    
+        // Save default to Flask
+        try {
+            await fetch('http://127.0.0.1:5000/add-category', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userid: userId,
+                    category: 'Default Category'
+                })
+            });
+        } catch (err) {
+            console.error('Failed to save default category to backend:', err);
+        }
 
-populateStats();
+    // Now compute and render
+    stats = computeStats(info);
+    gatherHighlights(info, highlight);
+    populateContent();
+    populateBest();
+    populateStats();
+
+    for (const categoryName in info) {
+        populateInitialCategoryNames(categoryName);
+    }
+
+    openFirstCategory();
+});
+
+// stats = computeStats(info);
+// gatherHighlights(info, highlight);
+// populateContent();
+// populateBest();
+// populateStats();
