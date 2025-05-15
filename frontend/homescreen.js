@@ -26,7 +26,7 @@ var stats =
 
 const descriptions = 
 {
-    recent_creation: "new entries this month",
+    recent_creation: "hours slept btw shoutout to ryan",
     total_category: "lists made in lifetime",
     average_rating: "average rating",
     total_entries: "total entries made"
